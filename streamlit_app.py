@@ -179,92 +179,77 @@ with tab2:
                 for col_idx, col in enumerate([col1, col2]):
                     if idx + col_idx < len(valid_comparisons):
                         item = valid_comparisons[idx + col_idx]
-                        # Fixed formula: abs() to always show positive savings
                         savings = abs(item['competitor'] - item['super_one'])
                         
                         with col:
-                            with st.container(border=True):
-                                # Header - Cooper Black font with different sizes (BIGGER)
-                                st.markdown(
-                                    "<div style='text-align: center; margin: -10px 0 0 0; padding: 20px 0 10px 0;'>"
-                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
-                                    "<span style='font-size: 52px;'>Compare</span> "
-                                    "<u style='font-size: 36px;'>AND</u> "
-                                    "<span style='font-size: 52px;'>Save</span>"
-                                    "</h2>"
-                                    "</div>",
-                                    unsafe_allow_html=True
-                                )
+                            # Create card as pure HTML
+                            card_html = f"""
+                            <div style='border: 1px solid #ccc; border-radius: 8px; padding: 20px; background: white; font-family: Arial, sans-serif; min-height: 450px;'>
+                                <!-- Header -->
+                                <div style='text-align: center; margin-bottom: 20px;'>
+                                    <h2 style='margin: 0; font-family: "Cooper Black", "Arial Black", sans-serif; font-weight: 900; font-size: 52px; line-height: 1.0;'>
+                                        Compare <u style='font-size: 36px;'>AND</u> Save
+                                    </h2>
+                                </div>
                                 
-                                # Product Name - Arial
-                                st.markdown(
-                                    f"<h3 style='text-align: center; margin: 6px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
-                                    unsafe_allow_html=True
-                                )
+                                <!-- Product Name -->
+                                <h3 style='text-align: center; margin: 15px 0; font-size: 26px; font-weight: bold; border-bottom: 2px solid black; padding-bottom: 12px;'>
+                                    {item['product']}
+                                </h3>
                                 
-                                # Main content: Two columns with vertical divider
-                                left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
+                                <!-- Main Content Table -->
+                                <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                                    <tr>
+                                        <!-- Left Column -->
+                                        <td style='width: 45%; vertical-align: top; padding-right: 20px;'>
+                                            <div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: "Ink Free", "Segoe Print", Arial, sans-serif;'>
+                                                {competitor}<br/>Price
+                                            </div>
+                                            <div style='text-align: center; font-weight: bold; font-size: 48px; margin-bottom: 20px;'>
+                                                ${item['competitor']:.2f}
+                                            </div>
+                                            
+                                            <hr style='margin: 20px 0; border: none; border-top: 1px solid #666;'/>
+                                            
+                                            <div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 8px; font-family: "Ink Free", "Segoe Print", Arial, sans-serif;'>
+                                                Super 1 Price
+                                            </div>
+                                            <div style='text-align: center; font-weight: bold; font-size: 44px;'>
+                                                ${item['super_one']:.2f}
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Divider -->
+                                        <td style='width: 10%; text-align: center; vertical-align: middle;'>
+                                            <div style='width: 2px; height: 280px; background: black; margin: 0 auto;'></div>
+                                        </td>
+                                        
+                                        <!-- Right Column -->
+                                        <td style='width: 45%; text-align: center; vertical-align: middle;'>
+                                            <svg width="140" height="110" viewBox="0 0 140 110" style='margin-bottom: 5px;'>
+                                                <defs>
+                                                    <path id="curve{idx}_{col_idx}" d="M 10,90 A 50,50 0 0,1 130,90" fill="none"/>
+                                                </defs>
+                                                <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
+                                                    <textPath href="#curve{idx}_{col_idx}" startOffset="50%" text-anchor="middle">
+                                                        BUYING POWER SAVINGS
+                                                    </textPath>
+                                                </text>
+                                            </svg>
+                                            <div style='font-weight: bold; font-size: 68px; color: darkgreen;'>
+                                                ${savings:.2f}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 
-                                with left_col:
-                                    # Competitor Price Label - Ink Free font
-                                    st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 6px; margin-top: 0; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    # Competitor Price - Arial
-                                    st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 12px; margin-top: 0;'>${item['competitor']:.2f}</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    
-                                    # Divider line in left column
-                                    st.markdown("<hr style='margin: 10px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
-                                    
-                                    # Super 1 Price Label - Ink Free font
-                                    st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 4px; margin-top: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    # Super 1 Price - Arial
-                                    st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif; margin-top: 0;'>${item['super_one']:.2f}</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                with divider_col:
-                                    # Vertical divider line - LONGER
-                                    st.markdown(
-                                        "<div style='border-left: 2px solid black; height: 220px; margin: -10px auto 0 auto;'></div>",
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                with right_col:
-                                    # Savings Amount with Curved Text using SVG
-                                    st.markdown(
-                                        """
-                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
-                                        <svg width="140" height="100" viewBox="0 0 140 100" style='margin-bottom: 0px;'>
-                                          <defs>
-                                            <path id="curve" d="M 10,80 A 50,50 0 0,1 130,80" fill="none"/>
-                                          </defs>
-                                          <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
-                                            <textPath href="#curve" startOffset="50%" text-anchor="middle">
-                                              BUYING POWER SAVINGS
-                                            </textPath>
-                                          </text>
-                                        </svg>
-                                        """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -20px; line-height: 1;'>${savings:.2f}</div>" +
-                                        """
-                                        </div>
-                                        """,
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                # Date Footer - Arial
-                                st.markdown(
-                                    f"<div style='text-align: center; font-size: 9px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
-                                    unsafe_allow_html=True
-                                )
+                                <!-- Footer -->
+                                <div style='text-align: center; font-size: 9px; margin-top: 20px; padding-top: 12px; border-top: 1px solid #ddd;'>
+                                    Price Check Date: {check_date.strftime('%m/%d/%Y')}
+                                </div>
+                            </div>
+                            """
+                            st.markdown(card_html, unsafe_allow_html=True)
         else:
             st.warning("No valid comparisons found for this competitor.")
         
@@ -278,75 +263,64 @@ with tab2:
                         item = dnc_products[idx + col_idx]
                         
                         with col:
-                            with st.container(border=True):
-                                # Header - Cooper Black font with different sizes (BIGGER)
-                                st.markdown(
-                                    "<div style='text-align: center; margin: -10px 0 0 0; padding: 20px 0 10px 0;'>"
-                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
-                                    "<span style='font-size: 52px;'>Compare</span> "
-                                    "<u style='font-size: 36px;'>AND</u> "
-                                    "<span style='font-size: 52px;'>Save</span>"
-                                    "</h2>"
-                                    "</div>",
-                                    unsafe_allow_html=True
-                                )
+                            # Create card as pure HTML
+                            card_html = f"""
+                            <div style='border: 1px solid #ccc; border-radius: 8px; padding: 20px; background: white; font-family: Arial, sans-serif; min-height: 450px;'>
+                                <!-- Header -->
+                                <div style='text-align: center; margin-bottom: 20px;'>
+                                    <h2 style='margin: 0; font-family: "Cooper Black", "Arial Black", sans-serif; font-weight: 900; font-size: 52px; line-height: 1.0;'>
+                                        Compare <u style='font-size: 36px;'>AND</u> Save
+                                    </h2>
+                                </div>
                                 
-                                # Product Name - Arial
-                                st.markdown(
-                                    f"<h3 style='text-align: center; margin: 6px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
-                                    unsafe_allow_html=True
-                                )
+                                <!-- Product Name -->
+                                <h3 style='text-align: center; margin: 15px 0; font-size: 26px; font-weight: bold; border-bottom: 2px solid black; padding-bottom: 12px;'>
+                                    {item['product']}
+                                </h3>
                                 
-                                # Main content: Two columns with vertical divider
-                                left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
+                                <!-- Main Content Table -->
+                                <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                                    <tr>
+                                        <!-- Left Column -->
+                                        <td style='width: 45%; vertical-align: top; padding-right: 20px;'>
+                                            <div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: "Ink Free", "Segoe Print", Arial, sans-serif;'>
+                                                {competitor}<br/>Price
+                                            </div>
+                                            <div style='text-align: center; font-weight: bold; font-size: 48px; margin-bottom: 20px;'>
+                                                $0.00
+                                            </div>
+                                            
+                                            <hr style='margin: 20px 0; border: none; border-top: 1px solid #666;'/>
+                                            
+                                            <div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 8px; font-family: "Ink Free", "Segoe Print", Arial, sans-serif;'>
+                                                Super 1 Price
+                                            </div>
+                                            <div style='text-align: center; font-weight: bold; font-size: 44px;'>
+                                                ${item['super_one']:.2f}
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Divider -->
+                                        <td style='width: 10%; text-align: center; vertical-align: middle;'>
+                                            <div style='width: 2px; height: 280px; background: black; margin: 0 auto;'></div>
+                                        </td>
+                                        
+                                        <!-- Right Column -->
+                                        <td style='width: 45%; text-align: center; vertical-align: middle;'>
+                                            <div style='font-weight: bold; font-size: 54px; color: darkred; line-height: 1.1;'>
+                                                DOES<br/>NOT<br/>CARRY
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 
-                                with left_col:
-                                    # Competitor Price Label - Ink Free font
-                                    st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 6px; margin-top: 0; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    # Competitor Price - Arial
-                                    st.markdown(
-                                        "<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 12px; margin-top: 0;'>$0.00</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    
-                                    # Divider line in left column
-                                    st.markdown("<hr style='margin: 10px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
-                                    
-                                    # Super 1 Price Label - Ink Free font
-                                    st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 4px; margin-top: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                    # Super 1 Price - Arial
-                                    st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif; margin-top: 0;'>${item['super_one']:.2f}</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                with divider_col:
-                                    # Vertical divider line - LONGER
-                                    st.markdown(
-                                        "<div style='border-left: 2px solid black; height: 220px; margin: -10px auto 0 auto;'></div>",
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                with right_col:
-                                    # Does Not Carry - CENTERED VERTICALLY
-                                    st.markdown(
-                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
-                                        "<div style='font-weight: bold; font-size: 54px; color: darkred; font-family: Arial, sans-serif; line-height: 1.0;'>DOES<br/>NOT<br/>CARRY</div>"
-                                        "</div>",
-                                        unsafe_allow_html=True
-                                    )
-                                
-                                # Date Footer - Arial
-                                st.markdown(
-                                    f"<div style='text-align: center; font-size: 9px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
-                                    unsafe_allow_html=True
-                                )
+                                <!-- Footer -->
+                                <div style='text-align: center; font-size: 9px; margin-top: 20px; padding-top: 12px; border-top: 1px solid #ddd;'>
+                                    Price Check Date: {check_date.strftime('%m/%d/%Y')}
+                                </div>
+                            </div>
+                            """
+                            st.markdown(card_html, unsafe_allow_html=True)
 
 with tab3:
     st.header("Print Your Cards")
