@@ -186,7 +186,7 @@ with tab2:
                             with st.container(border=True):
                                 # Header - Cooper Black font with different sizes (BIGGER)
                                 st.markdown(
-                                    "<div style='text-align: center; margin: 0px 0; padding: 15px 0;'>"
+                                    "<div style='text-align: center; margin: -10px 0 0 0; padding: 20px 0 10px 0;'>"
                                     "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
                                     "<span style='font-size: 52px;'>Compare</span> "
                                     "<u style='font-size: 36px;'>AND</u> "
@@ -198,7 +198,7 @@ with tab2:
                                 
                                 # Product Name - Arial
                                 st.markdown(
-                                    f"<h3 style='text-align: center; margin: 8px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
+                                    f"<h3 style='text-align: center; margin: 6px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
                                     unsafe_allow_html=True
                                 )
                                 
@@ -208,41 +208,41 @@ with tab2:
                                 with left_col:
                                     # Competitor Price Label - Ink Free font
                                     st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
+                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 6px; margin-top: 0; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Competitor Price - Arial
                                     st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 16px;'>${item['competitor']:.2f}</div>",
+                                        f"<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 12px; margin-top: 0;'>${item['competitor']:.2f}</div>",
                                         unsafe_allow_html=True
                                     )
                                     
                                     # Divider line in left column
-                                    st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
+                                    st.markdown("<hr style='margin: 10px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
                                     # Super 1 Price Label - Ink Free font
                                     st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
+                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 4px; margin-top: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Super 1 Price - Arial
                                     st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif;'>${item['super_one']:.2f}</div>",
+                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif; margin-top: 0;'>${item['super_one']:.2f}</div>",
                                         unsafe_allow_html=True
                                     )
                                 
                                 with divider_col:
-                                    # Vertical divider line
+                                    # Vertical divider line - LONGER
                                     st.markdown(
-                                        "<div style='border-left: 2px solid black; height: 180px; margin: 0 auto;'></div>",
+                                        "<div style='border-left: 2px solid black; height: 220px; margin: -10px auto 0 auto;'></div>",
                                         unsafe_allow_html=True
                                     )
                                 
                                 with right_col:
-                                    # Savings Amount with Curved Text using SVG - BIGGER FONT, LESS ARCH, CENTERED VERTICALLY
+                                    # Savings Amount with Curved Text using SVG
                                     st.markdown(
                                         """
-                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>
+                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
                                         <svg width="140" height="100" viewBox="0 0 140 100" style='margin-bottom: 0px;'>
                                           <defs>
                                             <path id="curve" d="M 10,80 A 50,50 0 0,1 130,80" fill="none"/>
@@ -253,7 +253,7 @@ with tab2:
                                             </textPath>
                                           </text>
                                         </svg>
-                                        """ + f"<div style='font-weight: bold; font-size: 60px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -12px;'>${savings:.2f}</div>" +
+                                        """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -20px; line-height: 1;'>${savings:.2f}</div>" +
                                         """
                                         </div>
                                         """,
@@ -262,7 +262,7 @@ with tab2:
                                 
                                 # Date Footer - Arial
                                 st.markdown(
-                                    f"<div style='text-align: center; font-size: 9px; margin-top: 12px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
+                                    f"<div style='text-align: center; font-size: 9px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
                                     unsafe_allow_html=True
                                 )
         else:
@@ -281,7 +281,7 @@ with tab2:
                             with st.container(border=True):
                                 # Header - Cooper Black font with different sizes (BIGGER)
                                 st.markdown(
-                                    "<div style='text-align: center; margin: 0px 0; padding: 15px 0;'>"
+                                    "<div style='text-align: center; margin: -10px 0 0 0; padding: 20px 0 10px 0;'>"
                                     "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
                                     "<span style='font-size: 52px;'>Compare</span> "
                                     "<u style='font-size: 36px;'>AND</u> "
@@ -293,7 +293,7 @@ with tab2:
                                 
                                 # Product Name - Arial
                                 st.markdown(
-                                    f"<h3 style='text-align: center; margin: 8px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
+                                    f"<h3 style='text-align: center; margin: 6px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
                                     unsafe_allow_html=True
                                 )
                                 
@@ -303,48 +303,48 @@ with tab2:
                                 with left_col:
                                     # Competitor Price Label - Ink Free font
                                     st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
+                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 6px; margin-top: 0; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Competitor Price - Arial
                                     st.markdown(
-                                        "<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 16px;'>$0.00</div>",
+                                        "<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 12px; margin-top: 0;'>$0.00</div>",
                                         unsafe_allow_html=True
                                     )
                                     
                                     # Divider line in left column
-                                    st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
+                                    st.markdown("<hr style='margin: 10px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
                                     # Super 1 Price Label - Ink Free font
                                     st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
+                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 4px; margin-top: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Super 1 Price - Arial
                                     st.markdown(
-                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif;'>${item['super_one']:.2f}</div>",
+                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif; margin-top: 0;'>${item['super_one']:.2f}</div>",
                                         unsafe_allow_html=True
                                     )
                                 
                                 with divider_col:
-                                    # Vertical divider line
+                                    # Vertical divider line - LONGER
                                     st.markdown(
-                                        "<div style='border-left: 2px solid black; height: 180px; margin: 0 auto;'></div>",
+                                        "<div style='border-left: 2px solid black; height: 220px; margin: -10px auto 0 auto;'></div>",
                                         unsafe_allow_html=True
                                     )
                                 
                                 with right_col:
                                     # Does Not Carry - CENTERED VERTICALLY
                                     st.markdown(
-                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>"
-                                        "<div style='font-weight: bold; font-size: 48px; color: darkred; font-family: Arial, sans-serif; line-height: 1.1;'>DOES<br/>NOT<br/>CARRY</div>"
+                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
+                                        "<div style='font-weight: bold; font-size: 54px; color: darkred; font-family: Arial, sans-serif; line-height: 1.0;'>DOES<br/>NOT<br/>CARRY</div>"
                                         "</div>",
                                         unsafe_allow_html=True
                                     )
                                 
                                 # Date Footer - Arial
                                 st.markdown(
-                                    f"<div style='text-align: center; font-size: 9px; margin-top: 12px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
+                                    f"<div style='text-align: center; font-size: 9px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ccc; font-family: Arial, sans-serif;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
                                     unsafe_allow_html=True
                                 )
 
