@@ -206,9 +206,9 @@ with tab2:
                                 left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
                                 
                                 with left_col:
-                                    # Competitor Price Label - Ink Free font (increased to 16px)
+                                    # Competitor Price Label - Ink Free font (increased to 18px)
                                     st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 16px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
+                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Competitor Price - Arial (increased to 44px)
@@ -220,9 +220,9 @@ with tab2:
                                     # Divider line in left column
                                     st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
-                                    # Super 1 Price Label - Ink Free font (increased to 15px)
+                                    # Super 1 Price Label - Ink Free font (increased to 17px)
                                     st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 15px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
+                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Super 1 Price - Arial (increased to 40px)
@@ -247,7 +247,7 @@ with tab2:
                                           <defs>
                                             <path id="curve" d="M 10,70 A 60,60 0 0,1 130,70" fill="none"/>
                                           </defs>
-                                          <text font-family="Arial, sans-serif" font-size="13" font-weight="bold" letter-spacing="1" fill="black">
+                                          <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" letter-spacing="1" fill="black">
                                             <textPath href="#curve" startOffset="50%" text-anchor="middle">
                                               BUYING POWER SAVINGS
                                             </textPath>
@@ -301,9 +301,9 @@ with tab2:
                                 left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
                                 
                                 with left_col:
-                                    # Competitor Price Label - Ink Free font (increased to 16px)
+                                    # Competitor Price Label - Ink Free font (increased to 18px)
                                     st.markdown(
-                                        f"<div style='text-align: center; font-style: italic; font-size: 16px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
+                                        f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Competitor Price - Arial (increased to 44px)
@@ -315,9 +315,9 @@ with tab2:
                                     # Divider line in left column
                                     st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
-                                    # Super 1 Price Label - Ink Free font (increased to 15px)
+                                    # Super 1 Price Label - Ink Free font (increased to 17px)
                                     st.markdown(
-                                        "<div style='text-align: center; font-style: italic; font-size: 15px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
+                                        "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
                                     # Super 1 Price - Arial (increased to 40px)
@@ -334,22 +334,11 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Does Not Carry with Curved Text using SVG
+                                    # Does Not Carry - NORMAL TEXT (NO ARCH), BIG FONT
                                     st.markdown(
-                                        """
-                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>
-                                        <svg width="140" height="90" viewBox="0 0 140 90" style='margin-bottom: 20px;'>
-                                          <defs>
-                                            <path id="curve2" d="M 10,70 A 60,60 0 0,1 130,70" fill="none"/>
-                                          </defs>
-                                          <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="darkred">
-                                            <textPath href="#curve2" startOffset="50%" text-anchor="middle">
-                                              DOES NOT CARRY
-                                            </textPath>
-                                          </text>
-                                        </svg>
-                                        </div>
-                                        """,
+                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>"
+                                        "<div style='font-weight: bold; font-size: 48px; color: darkred; font-family: Arial, sans-serif; line-height: 1.1;'>DOES<br/>NOT<br/>CARRY</div>"
+                                        "</div>",
                                         unsafe_allow_html=True
                                     )
                                 
