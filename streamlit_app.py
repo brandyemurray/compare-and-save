@@ -1,6 +1,5 @@
 # Compare and Save - Streamlit Price Comparison App
 import streamlit as st
-import pandas as pd
 from datetime import datetime
 
 # Set page config
@@ -154,111 +153,33 @@ with tab2:
                         savings = item['super_one'] - item['competitor']
                         
                         with col:
-                            # Card container
-                            st.markdown(f"""
-                            <div style="
-                                border: 3px solid black;
-                                padding: 20px;
-                                background-color: white;
-                                color: black;
-                                font-family: Arial, sans-serif;
-                                min-height: 500px;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-between;
-                            ">
-                                <!-- Header -->
-                                <div style="text-align: center; margin-bottom: 15px;">
-                                    <div style="font-size: 28px; font-weight: bold;">Compare AND Save</div>
-                                </div>
+                            with st.container(border=True):
+                                # Header
+                                st.markdown("<div style='text-align: center; font-size: 24px; font-weight: bold;'>Compare AND Save</div>", unsafe_allow_html=True)
+                                st.divider()
                                 
-                                <!-- Product Name -->
-                                <div style="
-                                    text-align: center;
-                                    font-size: 26px;
-                                    font-weight: bold;
-                                    border-bottom: 2px solid black;
-                                    padding-bottom: 10px;
-                                    margin-bottom: 20px;
-                                ">{item['product']}</div>
+                                # Product Name
+                                st.markdown(f"<div style='text-align: center; font-size: 20px; font-weight: bold;'>{item['product']}</div>", unsafe_allow_html=True)
                                 
-                                <!-- Main Content Row -->
-                                <div style="
-                                    display: flex;
-                                    align-items: center;
-                                    gap: 15px;
-                                    margin-bottom: 20px;
-                                    flex: 1;
-                                ">
-                                    <!-- Left Side: Competitor Price -->
-                                    <div style="
-                                        flex: 1;
-                                        text-align: center;
-                                    ">
-                                        <div style="
-                                            font-size: 13px;
-                                            font-style: italic;
-                                            margin-bottom: 8px;
-                                            line-height: 1.3;
-                                        ">{competitor}<br/>Price</div>
-                                        <div style="
-                                            font-size: 44px;
-                                            font-weight: bold;
-                                        ">${item['competitor']:.2f}</div>
-                                    </div>
-                                    
-                                    <!-- Vertical Divider -->
-                                    <div style="
-                                        border-left: 3px solid black;
-                                        height: 100px;
-                                    "></div>
-                                    
-                                    <!-- Right Side: Savings -->
-                                    <div style="
-                                        flex: 1;
-                                        text-align: center;
-                                    ">
-                                        <div style="
-                                            font-size: 16px;
-                                            font-weight: bold;
-                                            margin-bottom: 10px;
-                                            line-height: 1.2;
-                                        ">BUYING POWER<br/>SAVINGS</div>
-                                        <div style="
-                                            font-size: 52px;
-                                            font-weight: bold;
-                                            color: darkgreen;
-                                        ">${savings:.2f}</div>
-                                    </div>
-                                </div>
+                                # Pricing Row
+                                price_col1, price_col2 = st.columns([1, 1.2])
                                 
-                                <!-- Super 1 Price Section -->
-                                <div style="
-                                    text-align: center;
-                                    border-top: 2px solid #ccc;
-                                    padding-top: 12px;
-                                ">
-                                    <div style="
-                                        font-size: 12px;
-                                        font-style: italic;
-                                        margin-bottom: 5px;
-                                    ">Super 1 Price</div>
-                                    <div style="
-                                        font-size: 32px;
-                                        font-weight: bold;
-                                    ">${item['super_one']:.2f}</div>
-                                </div>
+                                with price_col1:
+                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 12px; font-style: italic;'>{competitor}<br/>Price</span></div>", unsafe_allow_html=True)
+                                    st.markdown(f"<div style='text-align: center; font-size: 36px; font-weight: bold;'>${item['competitor']:.2f}</div>", unsafe_allow_html=True)
                                 
-                                <!-- Date Footer -->
-                                <div style="
-                                    text-align: center;
-                                    font-size: 10px;
-                                    margin-top: 15px;
-                                    padding-top: 10px;
-                                    border-top: 1px solid #ccc;
-                                ">Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>
-                            </div>
-                            """, unsafe_allow_html=True)
+                                with price_col2:
+                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 13px; font-weight: bold;'>BUYING POWER<br/>SAVINGS</span></div>", unsafe_allow_html=True)
+                                    st.markdown(f"<div style='text-align: center; font-size: 40px; font-weight: bold; color: darkgreen;'>${savings:.2f}</div>", unsafe_allow_html=True)
+                                
+                                st.divider()
+                                
+                                # Super 1 Price
+                                st.markdown(f"<div style='text-align: center;'><span style='font-size: 11px; font-style: italic;'>Super 1 Price</span></div>", unsafe_allow_html=True)
+                                st.markdown(f"<div style='text-align: center; font-size: 28px; font-weight: bold;'>${item['super_one']:.2f}</div>", unsafe_allow_html=True)
+                                
+                                # Date
+                                st.markdown(f"<div style='text-align: center; font-size: 9px;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>", unsafe_allow_html=True)
         else:
             st.warning("No valid comparisons found for this competitor.")
         
@@ -272,105 +193,32 @@ with tab2:
                         item = dnc_products[idx + col_idx]
                         
                         with col:
-                            st.markdown(f"""
-                            <div style="
-                                border: 3px solid black;
-                                padding: 20px;
-                                background-color: white;
-                                color: black;
-                                font-family: Arial, sans-serif;
-                                min-height: 500px;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-between;
-                            ">
-                                <!-- Header -->
-                                <div style="text-align: center; margin-bottom: 15px;">
-                                    <div style="font-size: 28px; font-weight: bold;">Compare AND Save</div>
-                                </div>
+                            with st.container(border=True):
+                                # Header
+                                st.markdown("<div style='text-align: center; font-size: 24px; font-weight: bold;'>Compare AND Save</div>", unsafe_allow_html=True)
+                                st.divider()
                                 
-                                <!-- Product Name -->
-                                <div style="
-                                    text-align: center;
-                                    font-size: 26px;
-                                    font-weight: bold;
-                                    border-bottom: 2px solid black;
-                                    padding-bottom: 10px;
-                                    margin-bottom: 20px;
-                                ">{item['product']}</div>
+                                # Product Name
+                                st.markdown(f"<div style='text-align: center; font-size: 20px; font-weight: bold;'>{item['product']}</div>", unsafe_allow_html=True)
                                 
-                                <!-- Main Content Row -->
-                                <div style="
-                                    display: flex;
-                                    align-items: center;
-                                    gap: 15px;
-                                    margin-bottom: 20px;
-                                    flex: 1;
-                                ">
-                                    <!-- Left Side: Price (empty) -->
-                                    <div style="
-                                        flex: 1;
-                                        text-align: center;
-                                    ">
-                                        <div style="
-                                            font-size: 13px;
-                                            font-style: italic;
-                                            margin-bottom: 8px;
-                                            line-height: 1.3;
-                                        ">{competitor}<br/>Price</div>
-                                        <div style="
-                                            font-size: 44px;
-                                            font-weight: bold;
-                                        ">$0.00</div>
-                                    </div>
-                                    
-                                    <!-- Vertical Divider -->
-                                    <div style="
-                                        border-left: 3px solid black;
-                                        height: 100px;
-                                    "></div>
-                                    
-                                    <!-- Right Side: Does Not Carry -->
-                                    <div style="
-                                        flex: 1;
-                                        text-align: center;
-                                    ">
-                                        <div style="
-                                            font-size: 28px;
-                                            font-weight: bold;
-                                            color: darkred;
-                                            line-height: 1.2;
-                                        ">DOES NOT<br/>CARRY</div>
-                                    </div>
-                                </div>
+                                # Pricing Row
+                                price_col1, price_col2 = st.columns([1, 1.2])
                                 
-                                <!-- Super 1 Price Section -->
-                                <div style="
-                                    text-align: center;
-                                    border-top: 2px solid #ccc;
-                                    padding-top: 12px;
-                                ">
-                                    <div style="
-                                        font-size: 12px;
-                                        font-style: italic;
-                                        margin-bottom: 5px;
-                                    ">Super 1 Price</div>
-                                    <div style="
-                                        font-size: 32px;
-                                        font-weight: bold;
-                                    ">${item['super_one']:.2f}</div>
-                                </div>
+                                with price_col1:
+                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 12px; font-style: italic;'>{competitor}<br/>Price</span></div>", unsafe_allow_html=True)
+                                    st.markdown("<div style='text-align: center; font-size: 36px; font-weight: bold;'>$0.00</div>", unsafe_allow_html=True)
                                 
-                                <!-- Date Footer -->
-                                <div style="
-                                    text-align: center;
-                                    font-size: 10px;
-                                    margin-top: 15px;
-                                    padding-top: 10px;
-                                    border-top: 1px solid #ccc;
-                                ">Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>
-                            </div>
-                            """, unsafe_allow_html=True)
+                                with price_col2:
+                                    st.markdown("<div style='text-align: center;'><span style='font-size: 18px; font-weight: bold; color: darkred;'>DOES NOT<br/>CARRY</span></div>", unsafe_allow_html=True)
+                                
+                                st.divider()
+                                
+                                # Super 1 Price
+                                st.markdown("<div style='text-align: center;'><span style='font-size: 11px; font-style: italic;'>Super 1 Price</span></div>", unsafe_allow_html=True)
+                                st.markdown(f"<div style='text-align: center; font-size: 28px; font-weight: bold;'>${item['super_one']:.2f}</div>", unsafe_allow_html=True)
+                                
+                                # Date
+                                st.markdown(f"<div style='text-align: center; font-size: 9px;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>", unsafe_allow_html=True)
 
 with tab3:
     st.header("Print Your Cards")
@@ -444,6 +292,5 @@ with tab3:
         Create a `requirements.txt` file with:
         ```
         streamlit>=1.28.0
-        pandas>=1.5.0
         ```
         """)
