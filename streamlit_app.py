@@ -70,6 +70,7 @@ with tab1:
     
     # Create input form for products
     products_data = []
+    error_products = []
     
     for i in range(num_products):
         col1, col2, col3, col4 = st.columns([3, 1.5, 1.5, 1])
@@ -111,12 +112,32 @@ with tab1:
             )
         
         if product_name:  # Only add if product name is filled
+            # Check for pricing errors
+            if carries == "Yes" and competitor_price > 0 and super_one_price > competitor_price:
+                error_products.append({
+                    'product': product_name,
+                    'super_one': super_one_price,
+                    'competitor': competitor_price
+                })
+            
             products_data.append({
                 'product': product_name,
                 'super_one': super_one_price,
                 'competitor': competitor_price,
                 'carries': carries
             })
+    
+    # Show big warning if there are pricing errors
+    if error_products:
+        st.error(f"""
+        🚨 **HOLD UP!** 🚨
+        
+        **{len(error_products)} product(s) have HIGHER Super 1 prices than the competitor!**
+        
+        This defeats the purpose of the comparison. Fix these ASAP:
+        """)
+        for item in error_products:
+            st.error(f"❌ **{item['product']}** - Super 1: ${item['super_one']:.2f} vs {competitor}: ${item['competitor']:.2f}")
     
     # Add instructions
     st.info(
