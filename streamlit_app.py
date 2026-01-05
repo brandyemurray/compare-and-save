@@ -126,6 +126,14 @@ st.markdown("""
         border-top: 1px solid #ccc;
     }
     
+    .column-header {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 8px 0;
+        border-bottom: 2px solid #555;
+        margin-bottom: 10px;
+    }
+    
     @media print {
         body {
             margin: 0;
@@ -176,6 +184,17 @@ with tab1:
     
     with col1:
         st.markdown("**Pricing Data**")
+    
+    # Create column headers
+    header_cols = st.columns([3, 1.5, 1.5, 1])
+    with header_cols[0]:
+        st.markdown('<div class="column-header">Product Name</div>', unsafe_allow_html=True)
+    with header_cols[1]:
+        st.markdown('<div class="column-header">Super 1 Price</div>', unsafe_allow_html=True)
+    with header_cols[2]:
+        st.markdown('<div class="column-header">Competitor Price</div>', unsafe_allow_html=True)
+    with header_cols[3]:
+        st.markdown('<div class="column-header">Carries?</div>', unsafe_allow_html=True)
     
     # Create input form for products
     products_data = []
@@ -231,7 +250,7 @@ with tab1:
     st.info(
         "💡 **How to use:**\n"
         "1. Enter product names and prices\n"
-        "2. Select 'DNC' if the competitor doesn't carry the item\n"
+        "2. Select 'DNC' (Does Not Carry) if the competitor doesn't have the item\n"
         "3. Go to 'Preview' tab to see how cards will look\n"
         "4. Use 'Print' tab to print or export"
     )
