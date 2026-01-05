@@ -158,14 +158,19 @@ with tab2:
                 for col_idx, col in enumerate([col1, col2]):
                     if idx + col_idx < len(valid_comparisons):
                         item = valid_comparisons[idx + col_idx]
-                        savings = item['super_one'] - item['competitor']
+                        # Fixed formula: abs() to always show positive savings
+                        savings = abs(item['competitor'] - item['super_one'])
                         
                         with col:
                             with st.container(border=True):
-                                # Header - Cooper Black font
+                                # Header - Cooper Black font with different sizes
                                 st.markdown(
                                     "<div style='text-align: center; margin: 8px 0; padding: 10px 0;'>"
-                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900; font-size: 36px;'>Compare <u>AND</u> Save</h2>"
+                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
+                                    "<span style='font-size: 42px;'>Compare</span> "
+                                    "<u style='font-size: 28px;'>AND</u> "
+                                    "<span style='font-size: 42px;'>Save</span>"
+                                    "</h2>"
                                     "</div>",
                                     unsafe_allow_html=True
                                 )
@@ -213,10 +218,12 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Savings Amount - Arial
+                                    # Savings Amount with Half-Circle Top - Arial
                                     st.markdown(
                                         "<div style='display: flex; flex-direction: column; justify-content: center; height: 180px; text-align: center;'>"
-                                        "<div style='font-weight: bold; font-size: 14px; margin-bottom: 16px; font-family: Arial, sans-serif; letter-spacing: 0.5px;'>BUYING POWER<br/>SAVINGS</div>"
+                                        "<div style='border-radius: 20px 20px 0 0; background-color: transparent; padding: 8px 0; margin-bottom: 4px;'>"
+                                        "<div style='font-weight: bold; font-size: 14px; font-family: Arial, sans-serif; letter-spacing: 0.5px;'>BUYING POWER<br/>SAVINGS</div>"
+                                        "</div>"
                                         f"<div style='font-weight: bold; font-size: 52px; color: darkgreen; font-family: Arial, sans-serif;'>${savings:.2f}</div>"
                                         "</div>",
                                         unsafe_allow_html=True
@@ -241,10 +248,14 @@ with tab2:
                         
                         with col:
                             with st.container(border=True):
-                                # Header - Cooper Black font
+                                # Header - Cooper Black font with different sizes
                                 st.markdown(
                                     "<div style='text-align: center; margin: 8px 0; padding: 10px 0;'>"
-                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900; font-size: 36px;'>Compare <u>AND</u> Save</h2>"
+                                    "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
+                                    "<span style='font-size: 42px;'>Compare</span> "
+                                    "<u style='font-size: 28px;'>AND</u> "
+                                    "<span style='font-size: 42px;'>Save</span>"
+                                    "</h2>"
                                     "</div>",
                                     unsafe_allow_html=True
                                 )
@@ -292,9 +303,11 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Does Not Carry - Arial
+                                    # Does Not Carry with Half-Circle Top - Arial
                                     st.markdown(
                                         "<div style='display: flex; flex-direction: column; justify-content: center; height: 180px; text-align: center;'>"
+                                        "<div style='border-radius: 20px 20px 0 0; background-color: transparent; padding: 8px 0; margin-bottom: 4px;'>"
+                                        "</div>"
                                         "<div style='font-weight: bold; font-size: 20px; color: darkred; font-family: Arial, sans-serif; line-height: 1.3;'>DOES NOT<br/>CARRY</div>"
                                         "</div>",
                                         unsafe_allow_html=True
