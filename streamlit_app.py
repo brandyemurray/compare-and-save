@@ -218,14 +218,24 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Savings Amount with Half-Circle Top - Arial
+                                    # Savings Amount with Curved Text using SVG - Arial
                                     st.markdown(
-                                        "<div style='display: flex; flex-direction: column; justify-content: flex-start; height: 180px; text-align: center; padding-top: 8px;'>"
-                                        "<div style='border-top: 2px solid black; border-left: 2px solid black; border-right: 2px solid black; border-radius: 20px 20px 0 0; background-color: transparent; padding: 8px 4px; margin-bottom: 8px;'>"
-                                        "<div style='font-weight: bold; font-size: 13px; font-family: Arial, sans-serif; letter-spacing: 0.5px; line-height: 1.2;'>BUYING POWER<br/>SAVINGS</div>"
-                                        "</div>"
-                                        f"<div style='font-weight: bold; font-size: 52px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -2px;'>${savings:.2f}</div>"
-                                        "</div>",
+                                        """
+                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>
+                                        <svg width="140" height="90" viewBox="0 0 140 90" style='margin-bottom: 8px;'>
+                                          <defs>
+                                            <path id="curve" d="M 10,70 A 60,60 0 0,1 130,70" fill="none"/>
+                                          </defs>
+                                          <text font-family="Arial, sans-serif" font-size="12" font-weight="bold" letter-spacing="1" fill="black">
+                                            <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                                              BUYING POWER SAVINGS
+                                            </textPath>
+                                          </text>
+                                        </svg>
+                                        """ + f"<div style='font-weight: bold; font-size: 52px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -8px;'>${savings:.2f}</div>" +
+                                        """
+                                        </div>
+                                        """,
                                         unsafe_allow_html=True
                                     )
                                 
@@ -303,13 +313,22 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Does Not Carry with Half-Circle Top - Arial
+                                    # Does Not Carry with Curved Text using SVG
                                     st.markdown(
-                                        "<div style='display: flex; flex-direction: column; justify-content: flex-start; height: 180px; text-align: center; padding-top: 8px;'>"
-                                        "<div style='border-top: 2px solid black; border-left: 2px solid black; border-right: 2px solid black; border-radius: 20px 20px 0 0; background-color: transparent; padding: 8px 4px; margin-bottom: 8px;'>"
-                                        "</div>"
-                                        "<div style='font-weight: bold; font-size: 18px; color: darkred; font-family: Arial, sans-serif; line-height: 1.3; margin-top: 20px;'>DOES NOT<br/>CARRY</div>"
-                                        "</div>",
+                                        """
+                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>
+                                        <svg width="140" height="90" viewBox="0 0 140 90" style='margin-bottom: 20px;'>
+                                          <defs>
+                                            <path id="curve2" d="M 10,70 A 60,60 0 0,1 130,70" fill="none"/>
+                                          </defs>
+                                          <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="darkred">
+                                            <textPath href="#curve2" startOffset="50%" text-anchor="middle">
+                                              DOES NOT CARRY
+                                            </textPath>
+                                          </text>
+                                        </svg>
+                                        </div>
+                                        """,
                                         unsafe_allow_html=True
                                     )
                                 
