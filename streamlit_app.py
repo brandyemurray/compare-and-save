@@ -184,21 +184,21 @@ with tab2:
                         
                         with col:
                             with st.container(border=True):
-                                # Header - Cooper Black font with different sizes
+                                # Header - Cooper Black font with different sizes (BIGGER)
                                 st.markdown(
-                                    "<div style='text-align: center; margin: 8px 0; padding: 10px 0;'>"
+                                    "<div style='text-align: center; margin: 0px 0; padding: 15px 0;'>"
                                     "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
-                                    "<span style='font-size: 42px;'>Compare</span> "
-                                    "<u style='font-size: 28px;'>AND</u> "
-                                    "<span style='font-size: 42px;'>Save</span>"
+                                    "<span style='font-size: 52px;'>Compare</span> "
+                                    "<u style='font-size: 36px;'>AND</u> "
+                                    "<span style='font-size: 52px;'>Save</span>"
                                     "</h2>"
                                     "</div>",
                                     unsafe_allow_html=True
                                 )
                                 
-                                # Product Name - Arial (increased font size to 26px)
+                                # Product Name - Arial
                                 st.markdown(
-                                    f"<h3 style='text-align: center; margin: 12px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
+                                    f"<h3 style='text-align: center; margin: 8px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
                                     unsafe_allow_html=True
                                 )
                                 
@@ -206,12 +206,12 @@ with tab2:
                                 left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
                                 
                                 with left_col:
-                                    # Competitor Price Label - Ink Free font (increased to 18px)
+                                    # Competitor Price Label - Ink Free font
                                     st.markdown(
                                         f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
-                                    # Competitor Price - Arial (increased to 44px)
+                                    # Competitor Price - Arial
                                     st.markdown(
                                         f"<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 16px;'>${item['competitor']:.2f}</div>",
                                         unsafe_allow_html=True
@@ -220,12 +220,12 @@ with tab2:
                                     # Divider line in left column
                                     st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
-                                    # Super 1 Price Label - Ink Free font (increased to 17px)
+                                    # Super 1 Price Label - Ink Free font
                                     st.markdown(
                                         "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
-                                    # Super 1 Price - Arial (increased to 40px)
+                                    # Super 1 Price - Arial
                                     st.markdown(
                                         f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif;'>${item['super_one']:.2f}</div>",
                                         unsafe_allow_html=True
@@ -239,21 +239,21 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Savings Amount with Curved Text using SVG - Arial (increased to 60px)
+                                    # Savings Amount with Curved Text using SVG - BIGGER FONT, LESS ARCH, CENTERED VERTICALLY
                                     st.markdown(
                                         """
                                         <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>
-                                        <svg width="140" height="90" viewBox="0 0 140 90" style='margin-bottom: 8px;'>
+                                        <svg width="140" height="100" viewBox="0 0 140 100" style='margin-bottom: 0px;'>
                                           <defs>
-                                            <path id="curve" d="M 10,70 A 60,60 0 0,1 130,70" fill="none"/>
+                                            <path id="curve" d="M 10,80 A 50,50 0 0,1 130,80" fill="none"/>
                                           </defs>
-                                          <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" letter-spacing="1" fill="black">
+                                          <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
                                             <textPath href="#curve" startOffset="50%" text-anchor="middle">
                                               BUYING POWER SAVINGS
                                             </textPath>
                                           </text>
                                         </svg>
-                                        """ + f"<div style='font-weight: bold; font-size: 60px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -8px;'>${savings:.2f}</div>" +
+                                        """ + f"<div style='font-weight: bold; font-size: 60px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -12px;'>${savings:.2f}</div>" +
                                         """
                                         </div>
                                         """,
@@ -279,21 +279,21 @@ with tab2:
                         
                         with col:
                             with st.container(border=True):
-                                # Header - Cooper Black font with different sizes
+                                # Header - Cooper Black font with different sizes (BIGGER)
                                 st.markdown(
-                                    "<div style='text-align: center; margin: 8px 0; padding: 10px 0;'>"
+                                    "<div style='text-align: center; margin: 0px 0; padding: 15px 0;'>"
                                     "<h2 style='margin: 0; font-family: \"Cooper Black\", \"Arial Black\", sans-serif; font-weight: 900;'>"
-                                    "<span style='font-size: 42px;'>Compare</span> "
-                                    "<u style='font-size: 28px;'>AND</u> "
-                                    "<span style='font-size: 42px;'>Save</span>"
+                                    "<span style='font-size: 52px;'>Compare</span> "
+                                    "<u style='font-size: 36px;'>AND</u> "
+                                    "<span style='font-size: 52px;'>Save</span>"
                                     "</h2>"
                                     "</div>",
                                     unsafe_allow_html=True
                                 )
                                 
-                                # Product Name - Arial (increased font size to 26px)
+                                # Product Name - Arial
                                 st.markdown(
-                                    f"<h3 style='text-align: center; margin: 12px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
+                                    f"<h3 style='text-align: center; margin: 8px 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 26px; border-bottom: 2px solid black; padding-bottom: 8px;'>{item['product']}</h3>",
                                     unsafe_allow_html=True
                                 )
                                 
@@ -301,12 +301,12 @@ with tab2:
                                 left_col, divider_col, right_col = st.columns([0.9, 0.08, 1.1], gap="small")
                                 
                                 with left_col:
-                                    # Competitor Price Label - Ink Free font (increased to 18px)
+                                    # Competitor Price Label - Ink Free font
                                     st.markdown(
                                         f"<div style='text-align: center; font-style: italic; font-size: 18px; margin-bottom: 8px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>{competitor}<br/>Price</div>",
                                         unsafe_allow_html=True
                                     )
-                                    # Competitor Price - Arial (increased to 44px)
+                                    # Competitor Price - Arial
                                     st.markdown(
                                         "<div style='text-align: center; font-weight: bold; font-size: 44px; font-family: Arial, sans-serif; margin-bottom: 16px;'>$0.00</div>",
                                         unsafe_allow_html=True
@@ -315,12 +315,12 @@ with tab2:
                                     # Divider line in left column
                                     st.markdown("<hr style='margin: 12px 0; border: 1px solid #666;'>", unsafe_allow_html=True)
                                     
-                                    # Super 1 Price Label - Ink Free font (increased to 17px)
+                                    # Super 1 Price Label - Ink Free font
                                     st.markdown(
                                         "<div style='text-align: center; font-style: italic; font-size: 17px; margin-bottom: 6px; font-family: \"Ink Free\", \"Segoe Print\", Arial, sans-serif;'>Super 1 Price</div>",
                                         unsafe_allow_html=True
                                     )
-                                    # Super 1 Price - Arial (increased to 40px)
+                                    # Super 1 Price - Arial
                                     st.markdown(
                                         f"<div style='text-align: center; font-weight: bold; font-size: 40px; font-family: Arial, sans-serif;'>${item['super_one']:.2f}</div>",
                                         unsafe_allow_html=True
@@ -334,7 +334,7 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Does Not Carry - NORMAL TEXT (NO ARCH), BIG FONT
+                                    # Does Not Carry - CENTERED VERTICALLY
                                     st.markdown(
                                         "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; text-align: center;'>"
                                         "<div style='font-weight: bold; font-size: 48px; color: darkred; font-family: Arial, sans-serif; line-height: 1.1;'>DOES<br/>NOT<br/>CARRY</div>"
