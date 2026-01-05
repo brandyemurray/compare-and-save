@@ -154,32 +154,63 @@ with tab2:
                         
                         with col:
                             with st.container(border=True):
-                                # Header
-                                st.markdown("<div style='text-align: center; font-size: 24px; font-weight: bold;'>Compare AND Save</div>", unsafe_allow_html=True)
-                                st.divider()
+                                # Header: Compare AND Save (with AND underlined)
+                                st.markdown(
+                                    "<h2 style='text-align: center; margin: 10px 0; font-weight: bold; font-size: 32px;'>Compare <u>AND</u> Save</h2>",
+                                    unsafe_allow_html=True
+                                )
                                 
                                 # Product Name
-                                st.markdown(f"<div style='text-align: center; font-size: 20px; font-weight: bold;'>{item['product']}</div>", unsafe_allow_html=True)
+                                st.markdown(
+                                    f"<h3 style='text-align: center; margin: 15px 0; font-weight: bold; font-size: 20px; border-bottom: 2px solid black; padding-bottom: 10px;'>{item['product']}</h3>",
+                                    unsafe_allow_html=True
+                                )
                                 
-                                # Pricing Row
-                                price_col1, price_col2 = st.columns([1, 1.2])
+                                # Main pricing section with vertical divider
+                                left_col, divider_col, right_col = st.columns([1, 0.05, 1.2], gap="small")
                                 
-                                with price_col1:
-                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 12px; font-style: italic;'>{competitor}<br/>Price</span></div>", unsafe_allow_html=True)
-                                    st.markdown(f"<div style='text-align: center; font-size: 36px; font-weight: bold;'>${item['competitor']:.2f}</div>", unsafe_allow_html=True)
+                                with left_col:
+                                    st.markdown(
+                                        f"<div style='text-align: center; font-style: italic; font-size: 13px; margin-bottom: 8px;'>{competitor}<br/>Price</div>",
+                                        unsafe_allow_html=True
+                                    )
+                                    st.markdown(
+                                        f"<div style='text-align: center; font-weight: bold; font-size: 40px;'>${item['competitor']:.2f}</div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                with price_col2:
-                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 13px; font-weight: bold;'>BUYING POWER<br/>SAVINGS</span></div>", unsafe_allow_html=True)
-                                    st.markdown(f"<div style='text-align: center; font-size: 40px; font-weight: bold; color: darkgreen;'>${savings:.2f}</div>", unsafe_allow_html=True)
+                                with divider_col:
+                                    st.markdown(
+                                        "<div style='border-left: 3px solid black; height: 100px; margin: 0 auto;'></div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                st.divider()
+                                with right_col:
+                                    st.markdown(
+                                        "<div style='text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 8px; line-height: 1.3;'>BUYING POWER<br/>SAVINGS</div>",
+                                        unsafe_allow_html=True
+                                    )
+                                    st.markdown(
+                                        f"<div style='text-align: center; font-weight: bold; font-size: 48px; color: darkgreen;'>${savings:.2f}</div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                # Super 1 Price
-                                st.markdown(f"<div style='text-align: center;'><span style='font-size: 11px; font-style: italic;'>Super 1 Price</span></div>", unsafe_allow_html=True)
-                                st.markdown(f"<div style='text-align: center; font-size: 28px; font-weight: bold;'>${item['super_one']:.2f}</div>", unsafe_allow_html=True)
+                                # Super 1 Price Section
+                                st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
+                                st.markdown(
+                                    "<div style='text-align: center; font-style: italic; font-size: 12px; margin-bottom: 5px;'>Super 1 Price</div>",
+                                    unsafe_allow_html=True
+                                )
+                                st.markdown(
+                                    f"<div style='text-align: center; font-weight: bold; font-size: 32px;'>${item['super_one']:.2f}</div>",
+                                    unsafe_allow_html=True
+                                )
                                 
-                                # Date
-                                st.markdown(f"<div style='text-align: center; font-size: 9px;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>", unsafe_allow_html=True)
+                                # Date Footer
+                                st.markdown(
+                                    f"<div style='text-align: center; font-size: 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #ccc;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
+                                    unsafe_allow_html=True
+                                )
         else:
             st.warning("No valid comparisons found for this competitor.")
         
@@ -194,31 +225,59 @@ with tab2:
                         
                         with col:
                             with st.container(border=True):
-                                # Header
-                                st.markdown("<div style='text-align: center; font-size: 24px; font-weight: bold;'>Compare AND Save</div>", unsafe_allow_html=True)
-                                st.divider()
+                                # Header: Compare AND Save (with AND underlined)
+                                st.markdown(
+                                    "<h2 style='text-align: center; margin: 10px 0; font-weight: bold; font-size: 32px;'>Compare <u>AND</u> Save</h2>",
+                                    unsafe_allow_html=True
+                                )
                                 
                                 # Product Name
-                                st.markdown(f"<div style='text-align: center; font-size: 20px; font-weight: bold;'>{item['product']}</div>", unsafe_allow_html=True)
+                                st.markdown(
+                                    f"<h3 style='text-align: center; margin: 15px 0; font-weight: bold; font-size: 20px; border-bottom: 2px solid black; padding-bottom: 10px;'>{item['product']}</h3>",
+                                    unsafe_allow_html=True
+                                )
                                 
-                                # Pricing Row
-                                price_col1, price_col2 = st.columns([1, 1.2])
+                                # Main pricing section with vertical divider
+                                left_col, divider_col, right_col = st.columns([1, 0.05, 1.2], gap="small")
                                 
-                                with price_col1:
-                                    st.markdown(f"<div style='text-align: center;'><span style='font-size: 12px; font-style: italic;'>{competitor}<br/>Price</span></div>", unsafe_allow_html=True)
-                                    st.markdown("<div style='text-align: center; font-size: 36px; font-weight: bold;'>$0.00</div>", unsafe_allow_html=True)
+                                with left_col:
+                                    st.markdown(
+                                        f"<div style='text-align: center; font-style: italic; font-size: 13px; margin-bottom: 8px;'>{competitor}<br/>Price</div>",
+                                        unsafe_allow_html=True
+                                    )
+                                    st.markdown(
+                                        "<div style='text-align: center; font-weight: bold; font-size: 40px;'>$0.00</div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                with price_col2:
-                                    st.markdown("<div style='text-align: center;'><span style='font-size: 18px; font-weight: bold; color: darkred;'>DOES NOT<br/>CARRY</span></div>", unsafe_allow_html=True)
+                                with divider_col:
+                                    st.markdown(
+                                        "<div style='border-left: 3px solid black; height: 100px; margin: 0 auto;'></div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                st.divider()
+                                with right_col:
+                                    st.markdown(
+                                        "<div style='text-align: center; font-weight: bold; font-size: 20px; color: darkred; line-height: 1.3;'>DOES NOT<br/>CARRY</div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
-                                # Super 1 Price
-                                st.markdown("<div style='text-align: center;'><span style='font-size: 11px; font-style: italic;'>Super 1 Price</span></div>", unsafe_allow_html=True)
-                                st.markdown(f"<div style='text-align: center; font-size: 28px; font-weight: bold;'>${item['super_one']:.2f}</div>", unsafe_allow_html=True)
+                                # Super 1 Price Section
+                                st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
+                                st.markdown(
+                                    "<div style='text-align: center; font-style: italic; font-size: 12px; margin-bottom: 5px;'>Super 1 Price</div>",
+                                    unsafe_allow_html=True
+                                )
+                                st.markdown(
+                                    f"<div style='text-align: center; font-weight: bold; font-size: 32px;'>${item['super_one']:.2f}</div>",
+                                    unsafe_allow_html=True
+                                )
                                 
-                                # Date
-                                st.markdown(f"<div style='text-align: center; font-size: 9px;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>", unsafe_allow_html=True)
+                                # Date Footer
+                                st.markdown(
+                                    f"<div style='text-align: center; font-size: 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #ccc;'>Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>",
+                                    unsafe_allow_html=True
+                                )
 
 with tab3:
     st.header("Print Your Cards")
