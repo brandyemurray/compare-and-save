@@ -2,7 +2,6 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-import io
 
 # Set page config
 st.set_page_config(
@@ -11,140 +10,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Custom CSS for print-friendly cards
-st.markdown("""
-<style>
-    .card-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin: 20px 0;
-        page-break-inside: avoid;
-    }
-    
-    .card {
-        border: 2px solid black;
-        padding: 20px;
-        aspect-ratio: 5/7;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        font-family: Arial, sans-serif;
-        page-break-inside: avoid;
-        background: white;
-    }
-    
-    .card-header {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-    
-    .card-title {
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        border-bottom: 3px solid black;
-        padding-bottom: 10px;
-    }
-    
-    .card-competitor {
-        text-align: center;
-        margin-bottom: 15px;
-    }
-    
-    .competitor-name {
-        font-size: 14px;
-        font-style: italic;
-        margin-bottom: 5px;
-    }
-    
-    .price {
-        font-size: 36px;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    
-    .divider {
-        border-left: 3px solid black;
-        height: 120px;
-        margin: 0 15px;
-    }
-    
-    .savings-box {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .savings-label {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-    
-    .savings-amount {
-        font-size: 48px;
-        font-weight: bold;
-        color: darkgreen;
-    }
-    
-    .does-not-carry {
-        font-size: 36px;
-        font-weight: bold;
-        text-align: center;
-        color: red;
-    }
-    
-    .super-one {
-        text-align: center;
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 2px solid #ccc;
-    }
-    
-    .super-one-label {
-        font-size: 12px;
-        font-style: italic;
-    }
-    
-    .super-one-price {
-        font-size: 28px;
-        font-weight: bold;
-    }
-    
-    .date-footer {
-        text-align: center;
-        font-size: 10px;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #ccc;
-    }
-    
-    .column-header {
-        font-weight: bold;
-        font-size: 14px;
-        padding: 8px 0;
-        border-bottom: 2px solid #555;
-        margin-bottom: 10px;
-    }
-    
-    @media print {
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        .card {
-            page-break-inside: avoid;
-        }
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # Title
 st.title("💰 Compare and Save")
@@ -188,13 +53,13 @@ with tab1:
     # Create column headers
     header_cols = st.columns([3, 1.5, 1.5, 1])
     with header_cols[0]:
-        st.markdown('<div class="column-header">Product Name</div>', unsafe_allow_html=True)
+        st.markdown("**Product Name**")
     with header_cols[1]:
-        st.markdown('<div class="column-header">Super 1 Price</div>', unsafe_allow_html=True)
+        st.markdown("**Super 1 Price**")
     with header_cols[2]:
-        st.markdown('<div class="column-header">Competitor Price</div>', unsafe_allow_html=True)
+        st.markdown("**Competitor Price**")
     with header_cols[3]:
-        st.markdown('<div class="column-header">Carries?</div>', unsafe_allow_html=True)
+        st.markdown("**Carries?**")
     
     # Create input form for products
     products_data = []
@@ -269,7 +134,7 @@ with tab2:
             if item['carries'] == 'DNC':
                 dnc_products.append(item)
             else:
-                # Only show if competitor price is less than Super 1 (worth advertising)
+                # Only show if both prices are entered
                 if item['competitor'] > 0 and item['super_one'] > 0:
                     valid_comparisons.append(item)
         
@@ -281,42 +146,117 @@ with tab2:
             
             # Display cards in 2x2 grid
             for idx in range(0, len(valid_comparisons), 2):
-                cols = st.columns(2)
+                col1, col2 = st.columns(2)
                 
-                for col_idx, col in enumerate(cols):
+                for col_idx, col in enumerate([col1, col2]):
                     if idx + col_idx < len(valid_comparisons):
                         item = valid_comparisons[idx + col_idx]
                         savings = item['super_one'] - item['competitor']
-                        savings_pct = (savings / item['super_one'] * 100) if item['super_one'] > 0 else 0
                         
                         with col:
+                            # Card container
                             st.markdown(f"""
-                            <div style="border: 2px solid black; padding: 20px; aspect-ratio: 5/7; display: flex; flex-direction: column; justify-content: space-between; font-family: Arial;">
-                                <div>
-                                    <div style="text-align: center; font-size: 22px; font-weight: bold; margin-bottom: 10px;">Compare AND Save</div>
-                                    <div style="text-align: center; font-size: 24px; font-weight: bold; border-bottom: 2px solid black; padding-bottom: 8px;">{item['product']}</div>
+                            <div style="
+                                border: 3px solid black;
+                                padding: 20px;
+                                background-color: white;
+                                color: black;
+                                font-family: Arial, sans-serif;
+                                min-height: 500px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                            ">
+                                <!-- Header -->
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <div style="font-size: 28px; font-weight: bold;">Compare AND Save</div>
+                                </div>
+                                
+                                <!-- Product Name -->
+                                <div style="
+                                    text-align: center;
+                                    font-size: 26px;
+                                    font-weight: bold;
+                                    border-bottom: 2px solid black;
+                                    padding-bottom: 10px;
+                                    margin-bottom: 20px;
+                                ">{item['product']}</div>
+                                
+                                <!-- Main Content Row -->
+                                <div style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 15px;
+                                    margin-bottom: 20px;
+                                    flex: 1;
+                                ">
+                                    <!-- Left Side: Competitor Price -->
+                                    <div style="
+                                        flex: 1;
+                                        text-align: center;
+                                    ">
+                                        <div style="
+                                            font-size: 13px;
+                                            font-style: italic;
+                                            margin-bottom: 8px;
+                                            line-height: 1.3;
+                                        ">{competitor}<br/>Price</div>
+                                        <div style="
+                                            font-size: 44px;
+                                            font-weight: bold;
+                                        ">${item['competitor']:.2f}</div>
+                                    </div>
                                     
-                                    <div style="display: flex; align-items: center; margin-top: 10px; gap: 10px;">
-                                        <div style="flex: 1;">
-                                            <div style="text-align: center; font-size: 12px; font-style: italic; margin-bottom: 5px;">{competitor}<br/>Price</div>
-                                            <div style="text-align: center; font-size: 32px; font-weight: bold;">${item['competitor']:.2f}</div>
-                                        </div>
-                                        <div style="border-left: 3px solid black; height: 80px;"></div>
-                                        <div style="flex: 1; text-align: center;">
-                                            <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">BUYING POWER<br/>SAVINGS</div>
-                                            <div style="font-size: 40px; font-weight: bold; color: darkgreen;">${savings:.2f}</div>
-                                        </div>
+                                    <!-- Vertical Divider -->
+                                    <div style="
+                                        border-left: 3px solid black;
+                                        height: 100px;
+                                    "></div>
+                                    
+                                    <!-- Right Side: Savings -->
+                                    <div style="
+                                        flex: 1;
+                                        text-align: center;
+                                    ">
+                                        <div style="
+                                            font-size: 16px;
+                                            font-weight: bold;
+                                            margin-bottom: 10px;
+                                            line-height: 1.2;
+                                        ">BUYING POWER<br/>SAVINGS</div>
+                                        <div style="
+                                            font-size: 52px;
+                                            font-weight: bold;
+                                            color: darkgreen;
+                                        ">${savings:.2f}</div>
                                     </div>
                                 </div>
                                 
-                                <div style="text-align: center; border-top: 2px solid #ccc; padding-top: 10px; margin-top: 10px;">
-                                    <div style="font-size: 11px; font-style: italic;">Super 1 Price</div>
-                                    <div style="font-size: 26px; font-weight: bold;">${item['super_one']:.2f}</div>
+                                <!-- Super 1 Price Section -->
+                                <div style="
+                                    text-align: center;
+                                    border-top: 2px solid #ccc;
+                                    padding-top: 12px;
+                                ">
+                                    <div style="
+                                        font-size: 12px;
+                                        font-style: italic;
+                                        margin-bottom: 5px;
+                                    ">Super 1 Price</div>
+                                    <div style="
+                                        font-size: 32px;
+                                        font-weight: bold;
+                                    ">${item['super_one']:.2f}</div>
                                 </div>
                                 
-                                <div style="text-align: center; font-size: 9px; padding-top: 5px; border-top: 1px solid #ccc; margin-top: 5px;">
-                                    Price Check Date: {check_date.strftime('%m/%d/%Y')}
-                                </div>
+                                <!-- Date Footer -->
+                                <div style="
+                                    text-align: center;
+                                    font-size: 10px;
+                                    margin-top: 15px;
+                                    padding-top: 10px;
+                                    border-top: 1px solid #ccc;
+                                ">Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>
                             </div>
                             """, unsafe_allow_html=True)
         else:
@@ -325,39 +265,110 @@ with tab2:
         if dnc_products:
             st.markdown("### Items Not Carried")
             for idx in range(0, len(dnc_products), 2):
-                cols = st.columns(2)
+                col1, col2 = st.columns(2)
                 
-                for col_idx, col in enumerate(cols):
+                for col_idx, col in enumerate([col1, col2]):
                     if idx + col_idx < len(dnc_products):
                         item = dnc_products[idx + col_idx]
                         
                         with col:
                             st.markdown(f"""
-                            <div style="border: 2px solid black; padding: 20px; aspect-ratio: 5/7; display: flex; flex-direction: column; justify-content: space-between; font-family: Arial;">
-                                <div>
-                                    <div style="text-align: center; font-size: 22px; font-weight: bold; margin-bottom: 10px;">Compare AND Save</div>
-                                    <div style="text-align: center; font-size: 24px; font-weight: bold; border-bottom: 2px solid black; padding-bottom: 8px;">{item['product']}</div>
+                            <div style="
+                                border: 3px solid black;
+                                padding: 20px;
+                                background-color: white;
+                                color: black;
+                                font-family: Arial, sans-serif;
+                                min-height: 500px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                            ">
+                                <!-- Header -->
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <div style="font-size: 28px; font-weight: bold;">Compare AND Save</div>
+                                </div>
+                                
+                                <!-- Product Name -->
+                                <div style="
+                                    text-align: center;
+                                    font-size: 26px;
+                                    font-weight: bold;
+                                    border-bottom: 2px solid black;
+                                    padding-bottom: 10px;
+                                    margin-bottom: 20px;
+                                ">{item['product']}</div>
+                                
+                                <!-- Main Content Row -->
+                                <div style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 15px;
+                                    margin-bottom: 20px;
+                                    flex: 1;
+                                ">
+                                    <!-- Left Side: Price (empty) -->
+                                    <div style="
+                                        flex: 1;
+                                        text-align: center;
+                                    ">
+                                        <div style="
+                                            font-size: 13px;
+                                            font-style: italic;
+                                            margin-bottom: 8px;
+                                            line-height: 1.3;
+                                        ">{competitor}<br/>Price</div>
+                                        <div style="
+                                            font-size: 44px;
+                                            font-weight: bold;
+                                        ">$0.00</div>
+                                    </div>
                                     
-                                    <div style="display: flex; align-items: center; margin-top: 10px; gap: 10px;">
-                                        <div style="flex: 1;">
-                                            <div style="text-align: center; font-size: 12px; font-style: italic; margin-bottom: 5px;">{competitor}<br/>Price</div>
-                                            <div style="text-align: center; font-size: 32px; font-weight: bold;">$0.00</div>
-                                        </div>
-                                        <div style="border-left: 3px solid black; height: 80px;"></div>
-                                        <div style="flex: 1; text-align: center;">
-                                            <div style="font-size: 32px; font-weight: bold; color: red;">DOES NOT<br/>CARRY</div>
-                                        </div>
+                                    <!-- Vertical Divider -->
+                                    <div style="
+                                        border-left: 3px solid black;
+                                        height: 100px;
+                                    "></div>
+                                    
+                                    <!-- Right Side: Does Not Carry -->
+                                    <div style="
+                                        flex: 1;
+                                        text-align: center;
+                                    ">
+                                        <div style="
+                                            font-size: 28px;
+                                            font-weight: bold;
+                                            color: darkred;
+                                            line-height: 1.2;
+                                        ">DOES NOT<br/>CARRY</div>
                                     </div>
                                 </div>
                                 
-                                <div style="text-align: center; border-top: 2px solid #ccc; padding-top: 10px; margin-top: 10px;">
-                                    <div style="font-size: 11px; font-style: italic;">Super 1 Price</div>
-                                    <div style="font-size: 26px; font-weight: bold;">${item['super_one']:.2f}</div>
+                                <!-- Super 1 Price Section -->
+                                <div style="
+                                    text-align: center;
+                                    border-top: 2px solid #ccc;
+                                    padding-top: 12px;
+                                ">
+                                    <div style="
+                                        font-size: 12px;
+                                        font-style: italic;
+                                        margin-bottom: 5px;
+                                    ">Super 1 Price</div>
+                                    <div style="
+                                        font-size: 32px;
+                                        font-weight: bold;
+                                    ">${item['super_one']:.2f}</div>
                                 </div>
                                 
-                                <div style="text-align: center; font-size: 9px; padding-top: 5px; border-top: 1px solid #ccc; margin-top: 5px;">
-                                    Price Check Date: {check_date.strftime('%m/%d/%Y')}
-                                </div>
+                                <!-- Date Footer -->
+                                <div style="
+                                    text-align: center;
+                                    font-size: 10px;
+                                    margin-top: 15px;
+                                    padding-top: 10px;
+                                    border-top: 1px solid #ccc;
+                                ">Price Check Date: {check_date.strftime('%m/%d/%Y')}</div>
                             </div>
                             """, unsafe_allow_html=True)
 
@@ -380,13 +391,13 @@ with tab3:
             
             **Print Setup:**
             - Use your browser's print function (Ctrl+P or Cmd+P)
-            - Set margins to "None"
+            - Set margins to "None" or "Minimal"
             - Set scale to "100%"
             - Print to your preferred color or black & white
             """)
         
         with col2:
-            st.markdown("### 📄 Print Preview")
+            st.markdown("### 📄 Print Summary")
             
             # Generate preview
             valid_comparisons = [item for item in products_data 
