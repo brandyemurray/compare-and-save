@@ -239,26 +239,32 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Savings Amount with Curved Text using SVG
-                                    st.markdown(
-                                        """
-                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
-                                        <svg width="140" height="100" viewBox="0 0 140 100" style='margin-bottom: 0px;'>
-                                          <defs>
-                                            <path id="curve" d="M 10,80 A 50,50 0 0,1 130,80" fill="none"/>
-                                          </defs>
-                                          <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
-                                            <textPath href="#curve" startOffset="50%" text-anchor="middle">
-                                              BUYING POWER SAVINGS
-                                            </textPath>
-                                          </text>
-                                        </svg>
-                                        """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -20px; line-height: 1;'>${savings:.2f}</div>" +
-                                        """
-                                        </div>
-                                        """,
-                                        unsafe_allow_html=True
-                                    )
+                                # Savings Amount with Curved Text using SVG - TWO LINES
+                                st.markdown(
+                                    """
+                                    <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
+                                    <svg width="160" height="110" viewBox="0 0 160 110" style='margin-bottom: -5px;'>
+                                      <defs>
+                                        <path id="curve1" d="M 10,90 A 60,60 0 0,1 150,90" fill="none"/>
+                                        <path id="curve2" d="M 10,100 A 60,60 0 0,1 150,100" fill="none"/>
+                                      </defs>
+                                      <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
+                                        <textPath href="#curve1" startOffset="50%" text-anchor="middle">
+                                          BUYING POWER
+                                        </textPath>
+                                      </text>
+                                      <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
+                                        <textPath href="#curve2" startOffset="50%" text-anchor="middle">
+                                          SAVINGS
+                                        </textPath>
+                                      </text>
+                                    </svg>
+                                    """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -15px; line-height: 1;'>${savings:.2f}</div>" +
+                                    """
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True
+                                )
                                 
                                 # Date Footer - Arial
                                 st.markdown(
@@ -334,13 +340,13 @@ with tab2:
                                     )
                                 
                                 with right_col:
-                                    # Does Not Carry - CENTERED VERTICALLY
-                                    st.markdown(
-                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
-                                        "<div style='font-weight: bold; font-size: 54px; color: darkred; font-family: Arial, sans-serif; line-height: 1.0;'>DOES<br/>NOT<br/>CARRY</div>"
-                                        "</div>",
-                                        unsafe_allow_html=True
-                                    )
+                                # Does Not Carry - CENTERED VERTICALLY
+                                st.markdown(
+                                    "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
+                                    f"<div style='font-weight: bold; font-size: 42px; color: darkred; font-family: Arial, sans-serif; line-height: 1.2;'>{competitor}<br/>DOES NOT<br/>CARRY</div>"
+                                    "</div>",
+                                    unsafe_allow_html=True
+                                )
                                 
                                 # Date Footer - Arial
                                 st.markdown(
