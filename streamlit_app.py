@@ -238,9 +238,9 @@ with tab2:
                                         unsafe_allow_html=True
                                     )
                                 
-                                with right_col:
-                                # Savings Amount with Curved Text using SVG - TWO LINES
-                                st.markdown(
+                                 with right_col:
+                                 # Savings Amount with Curved Text using SVG - TWO LINES
+                                 st.markdown(
                                     """
                                     <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
                                     <svg width="160" height="110" viewBox="0 0 160 110" style='margin-bottom: -5px;'>
