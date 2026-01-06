@@ -234,7 +234,7 @@ with tab2:
                                 with divider_col:
                                     # Vertical divider line - LONGER
                                     st.markdown(
-                                        "<div style='border-left: 2px solid black; height: 260px; margin: -25px auto 0 auto;'></div>",
+                                        "<div style='border-left: 2px solid black; height: 260px; margin: 5px auto 0 auto;'></div>",
                                         unsafe_allow_html=True
                                     )
                                 
