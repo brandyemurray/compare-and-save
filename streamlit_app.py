@@ -238,33 +238,33 @@ with tab2:
                                         unsafe_allow_html=True
                                     )
                                 
-                                 with right_col:
-                                 # Savings Amount with Curved Text using SVG - TWO LINES
-                                 st.markdown(
-                                    """
-                                    <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
-                                    <svg width="160" height="110" viewBox="0 0 160 110" style='margin-bottom: -5px;'>
-                                      <defs>
-                                        <path id="curve1" d="M 10,90 A 60,60 0 0,1 150,90" fill="none"/>
-                                        <path id="curve2" d="M 10,100 A 60,60 0 0,1 150,100" fill="none"/>
-                                      </defs>
-                                      <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
-                                        <textPath href="#curve1" startOffset="50%" text-anchor="middle">
-                                          BUYING POWER
-                                        </textPath>
-                                      </text>
-                                      <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
-                                        <textPath href="#curve2" startOffset="50%" text-anchor="middle">
-                                          SAVINGS
-                                        </textPath>
-                                      </text>
-                                    </svg>
-                                    """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -15px; line-height: 1;'>${savings:.2f}</div>" +
-                                    """
-                                    </div>
-                                    """,
-                                    unsafe_allow_html=True
-                                )
+                                with right_col:
+                                    # Savings Amount with Curved Text using SVG - TWO LINES
+                                    st.markdown(
+                                        """
+                                        <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>
+                                        <svg width="160" height="110" viewBox="0 0 160 110" style='margin-bottom: -5px;'>
+                                          <defs>
+                                            <path id="curve1" d="M 10,90 A 60,60 0 0,1 150,90" fill="none"/>
+                                            <path id="curve2" d="M 10,100 A 60,60 0 0,1 150,100" fill="none"/>
+                                          </defs>
+                                          <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
+                                            <textPath href="#curve1" startOffset="50%" text-anchor="middle">
+                                              BUYING POWER
+                                            </textPath>
+                                          </text>
+                                          <text font-family="Arial, sans-serif" font-size="16" font-weight="bold" letter-spacing="0.5" fill="black">
+                                            <textPath href="#curve2" startOffset="50%" text-anchor="middle">
+                                              SAVINGS
+                                            </textPath>
+                                          </text>
+                                        </svg>
+                                        """ + f"<div style='font-weight: bold; font-size: 62px; color: darkgreen; font-family: Arial, sans-serif; margin-top: -15px; line-height: 1;'>${savings:.2f}</div>" +
+                                        """
+                                        </div>
+                                        """,
+                                        unsafe_allow_html=True
+                                    )
                                 
                                 # Date Footer - Arial
                                 st.markdown(
