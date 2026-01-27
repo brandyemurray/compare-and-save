@@ -57,55 +57,57 @@ def render_card_html(
         savings_class = "cs-savings cs-savings-positive"
         right_note = ""
 
-    return f"""
-<div class="cs-card">
-  <div class="cs-header">
-    <div class="cs-title">
-      <span class="cs-title-compare">Compare</span>
-      <span class="cs-title-and"><span>AND</span></span>
-      <span class="cs-title-save">Save</span>
-    </div>
-    <div class="cs-product">{html.escape(row.name)}</div>
-  </div>
-
-  <div class="cs-body">
-    <div class="cs-left">
-      <div class="cs-price-block">
-        <div class="cs-label">{competitor_label_html(competitor)}</div>
-        <div class="cs-price">{money(competitor_price)}</div>
-      </div>
-
-      <div class="cs-price-block">
-        <div class="cs-label">Super 1 Price</div>
-        <div class="cs-price">{money(super_one_price)}</div>
-      </div>
-    </div>
-
-    <div class="cs-divider" aria-hidden="true"></div>
-
-    <div class="cs-right">
-      <svg class="cs-arc" viewBox="0 0 250 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <defs>
-          <path id="arcPath_{uid}" d="M 25,100 A 100,100 0 0,1 225,100" fill="none" stroke="none"></path>
-        </defs>
-        <text class="cs-arc-text">
-          <textPath href="#arcPath_{uid}" startOffset="50%" text-anchor="middle">
-            BUYING POWER SAVINGS
-          </textPath>
-        </text>
-      </svg>
-
-      <div class="{savings_class}">{savings_text}</div>
-
-      <div class="cs-date-row">
-        <span class="cs-date-label">Price Check Date:</span>
-        <span class="cs-date-val">{date_str}</span>
-      </div>
-      {right_note}
-    </div>
-  </div>
-</div>
-""".strip()
+    # IMPORTANT: keep every line left-aligned. If we indent HTML in Markdown,
+    # Streamlit can interpret it as a code block and show raw tags.
+    return "\n".join(
+        [
+            '<div class="cs-card">',
+            '  <div class="cs-header">',
+            '    <div class="cs-title">',
+            '      <span class="cs-title-compare">Compare</span>',
+            '      <span class="cs-title-and"><span>AND</span></span>',
+            '      <span class="cs-title-save">Save</span>',
+            '    </div>',
+            f'    <div class="cs-product">{html.escape(row.name)}</div>',
+            "  </div>",
+            "",
+            '  <div class="cs-body">',
+            '    <div class="cs-left">',
+            '      <div class="cs-price-block">',
+            f'        <div class="cs-label">{competitor_label_html(competitor)}</div>',
+            f'        <div class="cs-price">{money(competitor_price)}</div>',
+            "      </div>",
+            "",
+            '      <div class="cs-price-block">',
+            '        <div class="cs-label">Super 1 Price</div>',
+            f'        <div class="cs-price">{money(super_one_price)}</div>',
+            "      </div>",
+            "    </div>",
+            "",
+            '    <div class="cs-divider" aria-hidden="true"></div>',
+            "",
+            '    <div class="cs-right">',
+            f'      <svg class="cs-arc" viewBox="0 0 250 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">',
+            "        <defs>",
+            f'          <path id="arcPath_{uid}" d="M 25,100 A 100,100 0 0,1 225,100" fill="none" stroke="none"></path>',
+            "        </defs>",
+            '        <text class="cs-arc-text">',
+            f'          <textPath href="#arcPath_{uid}" startOffset="50%" text-anchor="middle">BUYING POWER SAVINGS</textPath>',
+            "        </text>",
+            "      </svg>",
+            "",
+            f'      <div class="{savings_class}">{savings_text}</div>',
+            "",
+            '      <div class="cs-date-row">',
+            '        <span class="cs-date-label">Price Check Date:</span>',
+            f'        <span class="cs-date-val">{date_str}</span>',
+            "      </div>",
+            f"      {right_note}" if right_note else "",
+            "    </div>",
+            "  </div>",
+            "</div>",
+        ]
+    ).strip()
 
 
 CARD_CSS = """
