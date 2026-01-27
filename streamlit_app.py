@@ -35,6 +35,7 @@ def render_card_html(
     row: ProductRow,
 ) -> str:
     uid = uuid.uuid4().hex
+    uid2 = uuid.uuid4().hex
     # Cross-platform month/day without leading zeros (Excel-style)
     if hasattr(check_date, "strftime"):
         date_str = check_date.strftime("%m/%d/%Y").lstrip("0").replace("/0", "/")
@@ -45,20 +46,76 @@ def render_card_html(
     competitor_price = 0.0 if is_dnc else float(row.competitor_price)
     super_one_price = float(row.super_one_price)
 
-    # Savings display: for DNC we show (Super 1 Price) in red parentheses (Excel style).
-    if is_dnc:
-        savings_amount = abs(super_one_price)
-        savings_text = f"({money(savings_amount)})"
-        savings_class = "cs-savings cs-savings-negative"
-        right_note = f'<div class="cs-dnc-note">{competitor} DOES NOT CARRY</div>'
-    else:
+    if not is_dnc:
         savings_amount = abs(competitor_price - super_one_price)
         savings_text = money(savings_amount)
-        savings_class = "cs-savings cs-savings-positive"
-        right_note = ""
 
     # IMPORTANT: keep every line left-aligned. If we indent HTML in Markdown,
     # Streamlit can interpret it as a code block and show raw tags.
+    left_html_lines: list[str]
+    if is_dnc:
+        # DNC: left side shows ONLY Super 1 Price, centered (no competitor label/price)
+        left_html_lines = [
+            '<div class="cs-left cs-left-dnc">',
+            '<div class="cs-price-block cs-price-block-center">',
+            '<div class="cs-label cs-label-center">Super 1 Price</div>',
+            f'<div class="cs-price cs-price-center">{money(super_one_price)}</div>',
+            "</div>",
+            "</div>",
+        ]
+    else:
+        left_html_lines = [
+            '<div class="cs-left">',
+            '<div class="cs-price-block">',
+            f'<div class="cs-label">{competitor_label_html(competitor)}</div>',
+            f'<div class="cs-price">{money(competitor_price)}</div>',
+            "</div>",
+            "",
+            '<div class="cs-price-block">',
+            '<div class="cs-label">Super 1 Price</div>',
+            f'<div class="cs-price">{money(super_one_price)}</div>',
+            "</div>",
+            "</div>",
+        ]
+
+    right_html_lines: list[str]
+    if is_dnc:
+        # DNC: right side becomes a message, no arc, no savings amount
+        right_html_lines = [
+            '<div class="cs-right cs-right-dnc">',
+            f'<div class="cs-dnc-big">{html.escape(competitor)} DOES NOT CARRY</div>',
+            '<div class="cs-date-row">',
+            '<span class="cs-date-label">Price Check Date:</span>',
+            f'<span class="cs-date-val">{date_str}</span>',
+            "</div>",
+            "</div>",
+        ]
+    else:
+        # Normal: two-line arc + savings amount
+        right_html_lines = [
+            '<div class="cs-right">',
+            f'<svg class="cs-arc" viewBox="0 0 250 150" preserveAspectRatio="xMidYMid meet" aria-hidden="true">',
+            "<defs>",
+            f'<path id="arcTop_{uid}" d="M 25,115 A 100,100 0 0,1 225,115" fill="none" stroke="none"></path>',
+            f'<path id="arcBottom_{uid2}" d="M 40,125 A 85,85 0 0,1 210,125" fill="none" stroke="none"></path>',
+            "</defs>",
+            '<text class="cs-arc-text">',
+            f'<textPath href="#arcTop_{uid}" startOffset="50%" text-anchor="middle">BUYING POWER</textPath>',
+            "</text>",
+            '<text class="cs-arc-text cs-arc-text2">',
+            f'<textPath href="#arcBottom_{uid2}" startOffset="50%" text-anchor="middle">SAVINGS</textPath>',
+            "</text>",
+            "</svg>",
+            "",
+            f'<div class="cs-savings cs-savings-positive">{savings_text}</div>',
+            "",
+            '<div class="cs-date-row">',
+            '<span class="cs-date-label">Price Check Date:</span>',
+            f'<span class="cs-date-val">{date_str}</span>',
+            "</div>",
+            "</div>",
+        ]
+
     return "\n".join(
         [
             '<div class="cs-card">',
@@ -72,38 +129,11 @@ def render_card_html(
             "</div>",
             "",
             '<div class="cs-body">',
-            '<div class="cs-left">',
-            '<div class="cs-price-block">',
-            f'<div class="cs-label">{competitor_label_html(competitor)}</div>',
-            f'<div class="cs-price">{money(competitor_price)}</div>',
-            "</div>",
-            "",
-            '<div class="cs-price-block">',
-            '<div class="cs-label">Super 1 Price</div>',
-            f'<div class="cs-price">{money(super_one_price)}</div>',
-            "</div>",
-            "</div>",
+            *left_html_lines,
             "",
             '<div class="cs-divider" aria-hidden="true"></div>',
             "",
-            '<div class="cs-right">',
-            f'<svg class="cs-arc" viewBox="0 0 250 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">',
-            "<defs>",
-            f'<path id="arcPath_{uid}" d="M 25,100 A 100,100 0 0,1 225,100" fill="none" stroke="none"></path>',
-            "</defs>",
-            '<text class="cs-arc-text">',
-            f'<textPath href="#arcPath_{uid}" startOffset="50%" text-anchor="middle">BUYING POWER SAVINGS</textPath>',
-            "</text>",
-            "</svg>",
-            "",
-            f'<div class="{savings_class}">{savings_text}</div>',
-            "",
-            '<div class="cs-date-row">',
-            '<span class="cs-date-label">Price Check Date:</span>',
-            f'<span class="cs-date-val">{date_str}</span>',
-            "</div>",
-            f"{right_note}" if right_note else "",
-            "</div>",
+            *right_html_lines,
             "</div>",
             "</div>",
         ]
@@ -187,6 +217,18 @@ CARD_CSS = """
     text-align: left;
   }
 
+  .cs-price-block-center {
+    text-align: center;
+  }
+
+  .cs-label-center {
+    text-align: center;
+  }
+
+  .cs-price-center {
+    text-align: center;
+  }
+
   .cs-label {
     font-family: "Caveat", cursive;
     font-size: 28px;
@@ -221,18 +263,27 @@ CARD_CSS = """
     text-align: center;
   }
 
+  .cs-right-dnc {
+    justify-content: center;
+  }
+
   .cs-arc {
     width: 230px;
-    height: 115px;
-    margin: 0 0 -8px 0;
+    height: 135px;
+    margin: 0;
   }
 
   .cs-arc-text {
     font-family: Arial, sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     letter-spacing: 3px;
     fill: #000;
+  }
+
+  .cs-arc-text2 {
+    font-size: 22px;
+    letter-spacing: 4px;
   }
 
   .cs-savings {
@@ -259,11 +310,13 @@ CARD_CSS = """
     font-size: 14px;
   }
 
-  .cs-dnc-note {
-    margin-top: 6px;
+  .cs-dnc-big {
     font-family: Arial, sans-serif;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 10px;
   }
 
   /* Print-only behavior: hide Streamlit UI, show only the card grid */
