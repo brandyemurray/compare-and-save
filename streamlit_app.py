@@ -341,12 +341,12 @@ with tab2:
                                 
                                 with right_col:
                                 # Does Not Carry - CENTERED VERTICALLY
-                                st.markdown(
-                                    "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
-                                    f"<div style='font-weight: bold; font-size: 42px; color: darkred; font-family: Arial, sans-serif; line-height: 1.2;'>{competitor}<br/>DOES NOT<br/>CARRY</div>"
-                                    "</div>",
-                                    unsafe_allow_html=True
-                                )
+                                    st.markdown(
+                                        "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 220px; text-align: center;'>"
+                                        f"<div style='font-weight: bold; font-size: 42px; color: darkred; font-family: Arial, sans-serif; line-height: 1.2;'>{competitor}<br/>DOES NOT<br/>CARRY</div>"
+                                        "</div>",
+                                        unsafe_allow_html=True
+                                    )
                                 
                                 # Date Footer - Arial
                                 st.markdown(
