@@ -83,7 +83,10 @@ def render_card_html(
         # DNC: right side becomes a message, no arc, no savings amount
         right_html_lines = [
             '<div class="cs-right cs-right-dnc">',
-            f'<div class="cs-dnc-big">{html.escape(competitor)} DOES NOT CARRY</div>',
+            '<div class="cs-dnc-big">',
+            f'<div class="cs-dnc-line1">{html.escape(competitor)}</div>',
+            '<div class="cs-dnc-line2">DOES NOT CARRY</div>',
+            "</div>",
             '<div class="cs-date-row">',
             '<span class="cs-date-label">Price Check Date:</span>',
             f'<span class="cs-date-val">{date_str}</span>',
@@ -143,6 +146,16 @@ def render_card_html(
 CARD_CSS = """
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
+
+  /* Layout for the paged print grid (also visible on screen) */
+  .cs-pages { display: block; }
+  .cs-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.25in;
+    margin-bottom: 0.25in;
+  }
 
   .cs-card {
     background: #fff;
@@ -267,6 +280,23 @@ CARD_CSS = """
     justify-content: center;
   }
 
+  .cs-dnc-line1,
+  .cs-dnc-line2 {
+    display: block;
+  }
+
+  .cs-dnc-line1 {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 2px;
+  }
+
+  .cs-dnc-line2 {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
   .cs-arc {
     width: 230px;
     height: 135px;
@@ -312,9 +342,6 @@ CARD_CSS = """
 
   .cs-dnc-big {
     font-family: Arial, sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 1px;
     line-height: 1.1;
     margin-bottom: 10px;
   }
@@ -323,16 +350,27 @@ CARD_CSS = """
   @page { size: letter; margin: 0.35in; }
 
   @media print {
-    body * { visibility: hidden !important; }
-    #print-area, #print-area * { visibility: visible !important; }
-    #print-area { position: absolute; left: 0; top: 0; width: 100%; }
+    /* Hide Streamlit UI chrome */
+    [data-testid="stSidebar"],
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    footer {
+      display: none !important;
+    }
 
-    .cs-pages { display: block; }
+    /* Make main content use full page */
+    [data-testid="stAppViewContainer"] {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Print only the cards area */
+    #print-area {
+      width: 100%;
+    }
+
     .cs-page {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 0.25in;
       break-after: page;
       page-break-after: always;
     }
@@ -340,7 +378,11 @@ CARD_CSS = """
       break-after: auto;
       page-break-after: auto;
     }
-    .cs-card { margin: 0; }
+    .cs-card {
+      margin: 0;
+      height: 3.75in;
+      overflow: hidden;
+    }
   }
 </style>
 """
