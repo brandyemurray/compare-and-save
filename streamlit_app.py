@@ -166,6 +166,8 @@ CARD_CSS = """
     box-sizing: border-box;
     break-inside: avoid;
     page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
   }
 
   .cs-header {
@@ -213,6 +215,8 @@ CARD_CSS = """
     grid-template-columns: 1fr 0.08in 1.2fr;
     align-items: stretch;
     gap: 0.12in;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .cs-divider {
@@ -226,6 +230,12 @@ CARD_CSS = """
     justify-content: center;
     gap: 0.14in;
     padding-right: 0.06in;
+  }
+
+  .cs-left-dnc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .cs-price-block {
@@ -279,7 +289,10 @@ CARD_CSS = """
   }
 
   .cs-right-dnc {
-    justify-content: flex-start;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    justify-items: center;
+    align-items: center;
   }
 
   .cs-dnc-line1,
@@ -345,14 +358,15 @@ CARD_CSS = """
   .cs-dnc-big {
     font-family: Arial, sans-serif;
     line-height: 1.1;
-    margin-top: 18px;
-    margin-bottom: 0;
+    margin: 0;
+    place-self: center;
   }
 
-  /* Push date to the bottom for DNC cards (Excel-like balance) */
+  /* Push date to the bottom for DNC cards */
   .cs-right-dnc .cs-date-row {
-    margin-top: auto;
+    margin-top: 0;
     margin-bottom: 2px;
+    align-self: end;
   }
 
   /* Print-only behavior: show ONLY the card grid */
