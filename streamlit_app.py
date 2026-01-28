@@ -4,9 +4,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date, datetime
 import html
+import json
 import uuid
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 @dataclass(frozen=True)
@@ -97,10 +99,10 @@ def render_card_html(
         # Normal: two-line arc + savings amount
         right_html_lines = [
             '<div class="cs-right">',
-            f'<svg class="cs-arc" viewBox="0 0 250 150" preserveAspectRatio="xMidYMid meet" aria-hidden="true">',
+            f'<svg class="cs-arc" viewBox="0 0 250 170" preserveAspectRatio="xMidYMid meet" aria-hidden="true">',
             "<defs>",
-            f'<path id="arcTop_{uid}" d="M 25,115 A 100,100 0 0,1 225,115" fill="none" stroke="none"></path>',
-            f'<path id="arcBottom_{uid2}" d="M 40,125 A 85,85 0 0,1 210,125" fill="none" stroke="none"></path>',
+            f'<path id="arcTop_{uid}" d="M 15,130 A 110,110 0 0,1 235,130" fill="none" stroke="none"></path>',
+            f'<path id="arcBottom_{uid2}" d="M 35,145 A 95,95 0 0,1 215,145" fill="none" stroke="none"></path>',
             "</defs>",
             '<text class="cs-arc-text">',
             f'<textPath href="#arcTop_{uid}" startOffset="50%" text-anchor="middle">BUYING POWER</textPath>',
@@ -299,21 +301,21 @@ CARD_CSS = """
 
   .cs-arc {
     width: 230px;
-    height: 135px;
+    height: 150px;
     margin: 0;
   }
 
   .cs-arc-text {
     font-family: Arial, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     fill: #000;
   }
 
   .cs-arc-text2 {
     font-size: 22px;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
   }
 
   .cs-savings {
@@ -346,29 +348,13 @@ CARD_CSS = """
     margin-bottom: 10px;
   }
 
-  /* Print-only behavior: hide Streamlit UI, show only the card grid */
+  /* Print-only behavior: show ONLY the card grid */
   @page { size: letter; margin: 0.35in; }
 
   @media print {
-    /* Hide Streamlit UI chrome */
-    [data-testid="stSidebar"],
-    [data-testid="stHeader"],
-    [data-testid="stToolbar"],
-    [data-testid="stDecoration"],
-    footer {
-      display: none !important;
-    }
-
-    /* Make main content use full page */
-    [data-testid="stAppViewContainer"] {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-
-    /* Print only the cards area */
-    #print-area {
-      width: 100%;
-    }
+    body * { visibility: hidden !important; }
+    #print-area, #print-area * { visibility: visible !important; }
+    #print-area { position: fixed; left: 0; top: 0; width: 100%; }
 
     .cs-page {
       break-after: page;
@@ -591,4 +577,39 @@ with tab3:
         pages_html += "</div>"
 
         st.markdown(f'<div id="print-area">{pages_html}</div>', unsafe_allow_html=True)
+
+        # Optional: open a clean print-only window (most reliable on Streamlit Cloud)
+        print_doc = (
+            "<!doctype html><html><head><meta charset='utf-8'>"
+            "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+            "<title>Compare and Save - Print</title>"
+            + CARD_CSS +
+            "</head><body>"
+            + f"<div id='print-area'>{pages_html}</div>"
+            + "</body></html>"
+        )
+
+        components.html(
+            f"""
+<div style="margin: 16px 0;">
+  <button id="openPrint" style="padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;font-weight:600;">
+    Open print-only view
+  </button>
+  <span style="margin-left:10px;color:#666;">(If your browser preview is blank or shows the Streamlit UI)</span>
+</div>
+<script>
+  const html = {json.dumps(print_doc)};
+  document.getElementById("openPrint").addEventListener("click", () => {{
+    const w = window.open("", "_blank");
+    if (!w) return;
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(() => w.print(), 250);
+  }});
+</script>
+""",
+            height=80,
+        )
 
