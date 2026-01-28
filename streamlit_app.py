@@ -279,7 +279,7 @@ CARD_CSS = """
   }
 
   .cs-right-dnc {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .cs-dnc-line1,
@@ -345,7 +345,14 @@ CARD_CSS = """
   .cs-dnc-big {
     font-family: Arial, sans-serif;
     line-height: 1.1;
-    margin-bottom: 10px;
+    margin-top: 18px;
+    margin-bottom: 0;
+  }
+
+  /* Push date to the bottom for DNC cards (Excel-like balance) */
+  .cs-right-dnc .cs-date-row {
+    margin-top: auto;
+    margin-bottom: 2px;
   }
 
   /* Print-only behavior: show ONLY the card grid */
