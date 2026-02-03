@@ -375,7 +375,7 @@ CARD_CSS = """
   @media print {
     body * { visibility: hidden !important; }
     #print-area, #print-area * { visibility: visible !important; }
-    #print-area { position: fixed; left: 0; top: 0; width: 100%; }
+    #print-area { position: static; width: 100%; }
 
     .cs-page {
       break-after: page;
