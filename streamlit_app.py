@@ -370,7 +370,7 @@ CARD_CSS = """
   }
 
   /* Print-only behavior: show ONLY the card grid */
-  @page { size: letter; margin: 0.35in; }
+  @page { size: letter landscape; margin: 0.35in; }
 
   @media print {
     html, body { overflow: hidden !important; height: auto !important; }
@@ -565,34 +565,6 @@ with tab3:
         dnc = [r for r in products_data if r.carries == "DNC" or r.competitor_price == 0]
         all_items = valid + dnc
 
-        left, right = st.columns([1, 1])
-        with left:
-            st.markdown("### 🖨️ Print Instructions")
-            st.markdown(
-                f"""
-1. **Choose your competitor**: {competitor}  
-2. **Date**: {check_date.strftime('%m/%d/%Y')}  
-3. **Paper type**: 8.5\" × 11\" perforated card stock  
-4. **Cards per page**: 4 (2×2 grid)  
-
-**Best for 5+ cards:** Use **"Open print-only view"** below — no scrollbar, no app UI, and all pages (e.g. page 2 with card 5) will print. Then press Ctrl+P in that window.
-
-**Print Setup (important):**
-- Turn **Headers and footers** OFF
-- Turn **Background graphics** ON
-- Margins: **None** or **Minimal**
-- Scale: **100%**
-"""
-            )
-        with right:
-            st.markdown("### 📄 Print Summary")
-            num_pages = (len(all_items) + 3) // 4
-            st.metric(label="Total Cards", value=len(all_items))
-            st.metric(label="Pages Needed", value=num_pages)
-
-        st.markdown("---")
-        st.markdown("### Printable Cards (4 per page)")
-
         # Build paginated HTML: 4 cards per page in a 2x2 grid
         pages: list[list[ProductRow]] = []
         for i in range(0, len(all_items), 4):
@@ -607,9 +579,6 @@ with tab3:
             pages_html += "</div>"
         pages_html += "</div>"
 
-        st.markdown(f'<div id="print-area">{pages_html}</div>', unsafe_allow_html=True)
-
-        # Print-only window: clean HTML with all pages, no Streamlit UI (no scrollbar, no Manage app)
         print_doc = (
             "<!doctype html><html><head><meta charset='utf-8'>"
             "<meta name='viewport' content='width=device-width, initial-scale=1'>"
@@ -620,13 +589,14 @@ with tab3:
             + "</body></html>"
         )
 
+        # Print button and how-to at the top
         components.html(
             f"""
-<div style="margin: 16px 0;">
-  <button id="openPrint" style="padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#1976d2;color:white;cursor:pointer;font-weight:600;">
-    Open print-only view (recommended for 5+ cards)
+<div style="margin: 0 0 20px 0;">
+  <button id="openPrint" style="padding:12px 20px;border:none;border-radius:8px;background:#1976d2;color:white;cursor:pointer;font-weight:600;font-size:1em;">
+    Open print-only view
   </button>
-  <p style="margin:8px 0 0 0;color:#666;font-size:0.9em;">Opens a new tab with only the cards. Press <strong>Ctrl+P</strong> (or Cmd+P) there to print — all pages will appear and no app UI.</p>
+  <p style="margin:10px 0 0 0;color:#333;font-size:0.95em;">Use <strong>"Open print-only view"</strong> above. Then press <strong>Ctrl+P</strong> (or <strong>Cmd+P</strong>) in that window to print.</p>
 </div>
 <script>
   const html = {json.dumps(print_doc)};
@@ -640,6 +610,19 @@ with tab3:
   }});
 </script>
 """,
-            height=70,
+            height=85,
         )
+
+        # Summary
+        num_pages = (len(all_items) + 3) // 4
+        col1, col2, _ = st.columns([1, 1, 2])
+        with col1:
+            st.metric(label="Total Cards", value=len(all_items))
+        with col2:
+            st.metric(label="Pages Needed", value=num_pages)
+
+        st.markdown("---")
+        st.markdown("### Printable Cards (4 per page)")
+
+        st.markdown(f'<div id="print-area">{pages_html}</div>', unsafe_allow_html=True)
 
