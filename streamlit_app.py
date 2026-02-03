@@ -168,6 +168,7 @@ CARD_CSS = """
     page-break-inside: avoid;
     display: flex;
     flex-direction: column;
+    min-height: 3.75in;
   }
 
   .cs-header {
@@ -432,7 +433,7 @@ with st.sidebar:
         help="Date to display on cards",
     )
 
-tab1, tab2, tab3 = st.tabs(["📊 Input Data", "👁️ Preview", "🖨️ Print"])
+tab1, tab2 = st.tabs(["📊 Input Data", "🖨️ Print"])
 
 products_data: list[ProductRow] = []
 error_products: list[ProductRow] = []
@@ -526,39 +527,10 @@ with tab1:
         "💡 **How to use:**\n"
         "1. Enter product names and prices\n"
         "2. Select 'DNC' (Does Not Carry) if the competitor doesn't have the item\n"
-        "3. Go to 'Preview' tab to see how cards will look\n"
-        "4. Use 'Print' tab to print or export"
+        "3. Go to **Print** tab to see how cards will look and to print"
     )
 
 with tab2:
-    st.header("Preview Cards")
-    if not products_data:
-        st.warning("No products entered yet. Go to 'Input Data' tab to add products.")
-    else:
-        valid = [r for r in products_data if r.carries != "DNC" and r.competitor_price > 0 and r.super_one_price > 0]
-        dnc = [r for r in products_data if r.carries == "DNC" or r.competitor_price == 0]
-
-        st.markdown(f"### {competitor} Comparisons")
-        st.markdown(f"**Date**: {check_date.strftime('%m/%d/%Y')}")
-
-        st.success(f"✅ {len(valid)} valid comparisons | 📦 {len(dnc)} items not carried")
-
-        # Show valid then DNC (like your spreadsheet tabs)
-        rows_to_show = valid + dnc
-
-        for idx in range(0, len(rows_to_show), 2):
-            col_a, col_b = st.columns(2)
-            for j, col in enumerate([col_a, col_b]):
-                if idx + j >= len(rows_to_show):
-                    continue
-                row = rows_to_show[idx + j]
-                with col:
-                    st.markdown(
-                        render_card_html(competitor=competitor, check_date=check_date, row=row),
-                        unsafe_allow_html=True,
-                    )
-
-with tab3:
     st.header("Print Your Cards")
 
     if not products_data:
