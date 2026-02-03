@@ -378,15 +378,18 @@ CARD_CSS = """
     #print-area, #print-area * { visibility: visible !important; }
     #print-area { position: static !important; width: 100% !important; overflow: visible !important; }
 
-    /* Force each .cs-page to take a full sheet so page 2+ are not lost */
+    /* One .cs-page = one sheet; keep it within printable height so 4 cards stay on one page */
     .cs-page {
       break-after: page;
       page-break-after: always;
-      min-height: 10in;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      max-height: 7.8in;
     }
     .cs-page.is-last {
       break-after: auto;
       page-break-after: auto;
+      max-height: none;
     }
     .cs-card {
       margin: 0;
