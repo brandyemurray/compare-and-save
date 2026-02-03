@@ -373,13 +373,16 @@ CARD_CSS = """
   @page { size: letter; margin: 0.35in; }
 
   @media print {
+    html, body { overflow: hidden !important; height: auto !important; }
     body * { visibility: hidden !important; }
     #print-area, #print-area * { visibility: visible !important; }
-    #print-area { position: static; width: 100%; }
+    #print-area { position: static !important; width: 100% !important; overflow: visible !important; }
 
+    /* Force each .cs-page to take a full sheet so page 2+ are not lost */
     .cs-page {
       break-after: page;
       page-break-after: always;
+      min-height: 10in;
     }
     .cs-page.is-last {
       break-after: auto;
@@ -390,6 +393,12 @@ CARD_CSS = """
       height: 3.75in;
       overflow: hidden;
     }
+
+    /* Hide Streamlit chrome that can still show in print */
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    footer,
+    [data-testid="stHeader"] { display: none !important; visibility: hidden !important; }
   }
 </style>
 """
@@ -566,8 +575,9 @@ with tab3:
 3. **Paper type**: 8.5\" × 11\" perforated card stock  
 4. **Cards per page**: 4 (2×2 grid)  
 
+**Best for 5+ cards:** Use **"Open print-only view"** below — no scrollbar, no app UI, and all pages (e.g. page 2 with card 5) will print. Then press Ctrl+P in that window.
+
 **Print Setup (important):**
-- Open print (Ctrl+P / Cmd+P) **while on this Print tab**
 - Turn **Headers and footers** OFF
 - Turn **Background graphics** ON
 - Margins: **None** or **Minimal**
@@ -599,13 +609,13 @@ with tab3:
 
         st.markdown(f'<div id="print-area">{pages_html}</div>', unsafe_allow_html=True)
 
-        # Optional: open a clean print-only window (most reliable on Streamlit Cloud)
+        # Print-only window: clean HTML with all pages, no Streamlit UI (no scrollbar, no Manage app)
         print_doc = (
             "<!doctype html><html><head><meta charset='utf-8'>"
             "<meta name='viewport' content='width=device-width, initial-scale=1'>"
             "<title>Compare and Save - Print</title>"
             + CARD_CSS +
-            "</head><body>"
+            "</head><body style='margin:0; overflow:auto;'>"
             + f"<div id='print-area'>{pages_html}</div>"
             + "</body></html>"
         )
@@ -613,24 +623,23 @@ with tab3:
         components.html(
             f"""
 <div style="margin: 16px 0;">
-  <button id="openPrint" style="padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;font-weight:600;">
-    Open print-only view
+  <button id="openPrint" style="padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#1976d2;color:white;cursor:pointer;font-weight:600;">
+    Open print-only view (recommended for 5+ cards)
   </button>
-  <span style="margin-left:10px;color:#666;">(If your browser preview is blank or shows the Streamlit UI)</span>
+  <p style="margin:8px 0 0 0;color:#666;font-size:0.9em;">Opens a new tab with only the cards. Press <strong>Ctrl+P</strong> (or Cmd+P) there to print — all pages will appear and no app UI.</p>
 </div>
 <script>
   const html = {json.dumps(print_doc)};
   document.getElementById("openPrint").addEventListener("click", () => {{
     const w = window.open("", "_blank");
-    if (!w) return;
+    if (!w) {{ alert("Please allow pop-ups for this site."); return; }}
     w.document.open();
     w.document.write(html);
     w.document.close();
     w.focus();
-    setTimeout(() => w.print(), 250);
   }});
 </script>
 """,
-            height=80,
+            height=70,
         )
 
